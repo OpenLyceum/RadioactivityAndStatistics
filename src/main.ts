@@ -69,7 +69,7 @@ onReadyToLaunch(() => {
     }),
 
     credits: {
-      softwareDevelopment: "OpenPhysics",
+      softwareDevelopment: "OpenLyceum",
     },
   });
 

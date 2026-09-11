@@ -1,6 +1,6 @@
 # Radioactivity and Statistics
 
-[![CI](https://github.com/OpenPhysics/RadioactivityAndStatistics/actions/workflows/ci.yml/badge.svg)](https://github.com/OpenPhysics/RadioactivityAndStatistics/actions/workflows/ci.yml)
+[![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
 
 A counting-statistics laboratory. Measure radioactive decay — from a simulated
 source or from a real **PASCO Wireless Geiger Counter (PS-3238)** over Web
@@ -85,8 +85,8 @@ register and GM tube voltage, `?beepEnabled=false` silences the count beep, and
 
 ## License
 
-AGPL-3.0-or-later. See the [org-wide license](https://github.com/OpenPhysics/.github/blob/main/LICENSE).
+AGPL-3.0-or-later. See the [org-wide license](https://github.com/OpenLyceum/.github/blob/main/LICENSE).
 
 ## Contributing
 
-See the [org-wide contributing guide](https://github.com/OpenPhysics/.github/blob/main/CONTRIBUTING.md).
+See the [org-wide contributing guide](https://github.com/OpenLyceum/.github/blob/main/CONTRIBUTING.md).
