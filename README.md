@@ -67,7 +67,7 @@ counter's USB bridge can be claimed, yet its data path stays in loopback. See
 
 Useful query parameters: `?showDiagnostics=true` reveals the counter's raw count
 register and GM tube voltage, `?beepEnabled=false` silences the count beep, and
-`?tubeVoltage=500` sets the G-M tube bias (see `CLAUDE.md`).
+`?tubeVoltage=500` sets the G-M tube bias (see `AGENTS.md`).
 
 ## Tech Stack
 
