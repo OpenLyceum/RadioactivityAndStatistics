@@ -78,7 +78,7 @@ register and GM tube voltage, `?beepEnabled=false` silences the count beep, and
 | [Vite](https://vitejs.dev/) | ^8 | Build tool + dev server |
 | [TypeScript](https://www.typescriptlang.org/) | ^7 | Type-safe JavaScript |
 | [Biome](https://biomejs.dev/) | ^2.5 | Linting + formatting |
-| [Vitest](https://vitest.dev/) | ^4 | Unit tests |
+| [Vitest](https://vitest.dev/) | ^5 | Unit tests |
 | [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) | ^1 | PWA + service worker |
 | [Web Bluetooth](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API) | — | PASCO Geiger counter transport (Chromium only) |
 | [WebUSB](https://developer.mozilla.org/en-US/docs/Web/API/WebUSB_API) | — | Unfinished USB transport for the same counter (Chromium only) |
