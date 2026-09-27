@@ -144,8 +144,7 @@ Fleet-standard Vitest layout; unit tests live in root `tests/`, mirroring `src/`
 npm run lint && npm run check && npm run build && npm test
 ```
 
-`npm run release` skips `npm test` by default — append `&& npm test` before the
-version bump if cutting a release from this repo.
+`npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`, so the About dialog always matches the release.
 
 ## Compliance carve-outs
 
