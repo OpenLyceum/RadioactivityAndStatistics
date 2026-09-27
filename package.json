@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "A SceneryStack simulation: Radioactivity and Statistics.",
+  "description": "Measure radioactive decay, simulated or with a PASCO Wireless Geiger Counter, and compare the counts with Poisson and Gaussian statistics.",
   "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",
