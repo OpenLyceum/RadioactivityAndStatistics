@@ -1,5 +1,5 @@
 /**
- * SimControlOptions.ts
+ * RadioactivityAndStatisticsControlOptions.ts
  *
  * Shared sizing and layout for panel controls (sliders, checkboxes, NumberControls).
  * Import these instead of repeating scale / track-size values in each screen view.
@@ -17,14 +17,14 @@ const NUMBER_CONTROL_SLIDER_TRACK_SIZE = new Dimension2(110, 3);
 const CHECKBOX_BOX_WIDTH = 16;
 
 /** Options for standalone HSlider instances in control panels. */
-export const SIM_SLIDER_OPTIONS = {
+export const RADIOACTIVITY_AND_STATISTICS_SLIDER_OPTIONS = {
   trackSize: STANDALONE_SLIDER_TRACK_SIZE,
   thumbSize: SLIDER_THUMB_SIZE,
   trackFillEnabled: RadioactivityAndStatisticsColors.textColorProperty,
 } satisfies HSliderOptions;
 
 /** Base NumberControl options; spread into each instance and add titleNodeOptions as needed. */
-export const SIM_NUMBER_CONTROL_OPTIONS = {
+export const RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS = {
   arrowButtonOptions: { ...FLAT_RECTANGULAR_BUTTON_OPTIONS, scale: 0.75 },
   layoutFunction: NumberControl.createLayoutFunction4({
     sliderPadding: 4,
@@ -46,7 +46,7 @@ export const SIM_NUMBER_CONTROL_OPTIONS = {
  * mode). Do not use {@link RadioactivityAndStatisticsColors.controlSurfaceColorProperty} here — that
  * colour is for white chrome (push buttons, combo lists, Preferences).
  */
-export const SIM_CHECKBOX_OPTIONS = {
+export const RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS = {
   boxWidth: CHECKBOX_BOX_WIDTH,
   spacing: 4,
   checkboxColor: RadioactivityAndStatisticsColors.textColorProperty,

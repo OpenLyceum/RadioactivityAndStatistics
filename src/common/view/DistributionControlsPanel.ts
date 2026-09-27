@@ -22,8 +22,11 @@ import { StringManager } from "../../i18n/StringManager.js";
 import RadioactivityAndStatisticsColors from "../../RadioactivityAndStatisticsColors.js";
 import { BIN_WIDTH_RANGE, CONTROL_PANEL_WIDTH } from "../../RadioactivityAndStatisticsConstants.js";
 import type { RadioactivityModel } from "../model/RadioactivityModel.js";
+import {
+  RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS,
+  RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
+} from "../RadioactivityAndStatisticsControlOptions.js";
 import { RadioactivityAndStatisticsPanel } from "../RadioactivityAndStatisticsPanel.js";
-import { SIM_CHECKBOX_OPTIONS, SIM_NUMBER_CONTROL_OPTIONS } from "../SimControlOptions.js";
 import type { CurveVisibility } from "./HistogramNode.js";
 
 /**
@@ -60,7 +63,7 @@ export class DistributionControlsPanel extends RadioactivityAndStatisticsPanel {
           fill: RadioactivityAndStatisticsColors.textColorProperty,
           maxWidth: CONTROL_PANEL_WIDTH - 55,
         }),
-        { ...SIM_CHECKBOX_OPTIONS, accessibleName },
+        { ...RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS, accessibleName },
       );
 
     const poissonCheckbox = curveCheckbox(
@@ -86,7 +89,7 @@ export class DistributionControlsPanel extends RadioactivityAndStatisticsPanel {
         fill: RadioactivityAndStatisticsColors.textColorProperty,
         maxWidth: CONTROL_PANEL_WIDTH - 55,
       }),
-      { ...SIM_CHECKBOX_OPTIONS, accessibleName: a11y.autoBinWidthCheckboxStringProperty },
+      { ...RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS, accessibleName: a11y.autoBinWidthCheckboxStringProperty },
     );
 
     const manualBinWidthEnabledProperty = new DerivedProperty([model.isAutoBinWidthProperty], (isAuto) => !isAuto);
@@ -96,7 +99,7 @@ export class DistributionControlsPanel extends RadioactivityAndStatisticsPanel {
       model.manualBinWidthProperty,
       BIN_WIDTH_RANGE,
       {
-        ...SIM_NUMBER_CONTROL_OPTIONS,
+        ...RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
         delta: 1,
         titleNodeOptions: {
           font: new PhetFont(12),

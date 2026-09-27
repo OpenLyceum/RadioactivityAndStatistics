@@ -22,8 +22,11 @@ import { ChartViewType, type ChartViewTypeValue } from "../model/ChartViewType.j
 import { createExportFilename, samplesToCsv } from "../model/csvExport.js";
 import type { RadioactivityModel } from "../model/RadioactivityModel.js";
 import { FLAT_PANEL_PUSH_BUTTON_OPTIONS, LIGHT_SURFACE_TEXT_FILL } from "../RadioactivityAndStatisticsButtonOptions.js";
+import {
+  RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS,
+  RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
+} from "../RadioactivityAndStatisticsControlOptions.js";
 import { RadioactivityAndStatisticsPanel } from "../RadioactivityAndStatisticsPanel.js";
-import { SIM_CHECKBOX_OPTIONS, SIM_NUMBER_CONTROL_OPTIONS } from "../SimControlOptions.js";
 import { downloadCsv } from "./downloadCsv.js";
 
 export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
@@ -56,7 +59,7 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
       model.countingIntervalProperty,
       model.countingIntervalRange,
       {
-        ...SIM_NUMBER_CONTROL_OPTIONS,
+        ...RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
         delta: model.countingIntervalDelta,
         titleNodeOptions,
         numberDisplayOptions: {
@@ -76,7 +79,7 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
       model.samplesPerRunProperty,
       SAMPLES_PER_RUN_RANGE,
       {
-        ...SIM_NUMBER_CONTROL_OPTIONS,
+        ...RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
         delta: 5,
         titleNodeOptions,
         numberDisplayOptions: { textOptions: { font: new PhetFont(13) } },
@@ -94,7 +97,7 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
         maxWidth: CONTROL_PANEL_WIDTH - 50,
       }),
       {
-        ...SIM_CHECKBOX_OPTIONS,
+        ...RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS,
         accessibleName: a11y.continuousCheckboxStringProperty,
         visibleProperty: showSamplesPerRunControlProperty,
       },

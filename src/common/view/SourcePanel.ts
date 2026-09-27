@@ -30,8 +30,8 @@ import { ConnectionState } from "../model/ConnectionState.js";
 import { CountSourceType, type CountSourceTypeValue } from "../model/CountSource.js";
 import type { RadioactivityModel } from "../model/RadioactivityModel.js";
 import { FLAT_PANEL_PUSH_BUTTON_OPTIONS, LIGHT_SURFACE_TEXT_FILL } from "../RadioactivityAndStatisticsButtonOptions.js";
+import { RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS } from "../RadioactivityAndStatisticsControlOptions.js";
 import { RadioactivityAndStatisticsPanel } from "../RadioactivityAndStatisticsPanel.js";
-import { SIM_NUMBER_CONTROL_OPTIONS } from "../SimControlOptions.js";
 
 /** Radius of the connection-status dot. */
 const STATUS_DOT_RADIUS = 5;
@@ -109,7 +109,7 @@ function createSimulatedControls(
     model.simulatedSource.activityProperty,
     model.activityRange,
     {
-      ...SIM_NUMBER_CONTROL_OPTIONS,
+      ...RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
       delta: 1,
       titleNodeOptions: {
         font: new PhetFont(13),
