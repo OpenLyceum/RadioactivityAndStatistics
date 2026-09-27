@@ -170,3 +170,20 @@ tests import `src` modules that reference the Web Bluetooth and WebUSB globals.
 
 After `npm run build`, the sim is installable offline via Workbox
 (`dist/manifest.webmanifest`).
+
+## Accessibility
+
+Follows the shared [OpenLyceum accessibility convention](https://github.com/OpenLyceum/Baton/blob/main/ACCESSIBILITY.md).
+A11y strings live under the `a11y` key of each locale JSON, read through `StringManager`.
+
+- Screen summaries: `src/device/view/DeviceScreenSummaryContent.ts`, `src/simulation/view/SimulationScreenSummaryContent.ts`
+- Keyboard Shortcuts dialog: `src/common/view/RadioactivityKeyboardHelpContent.ts`
+- Keyboard-draggable objects: none (no draggable play-area objects use a keyboard drag listener yet)
+
+## Commands
+
+```bash
+npm run lint && npm run check && npm test && npm run build && npm run test:fuzz:quick
+```
+
+The standard scripts are listed in the README. `npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`.
