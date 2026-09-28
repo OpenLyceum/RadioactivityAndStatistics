@@ -2,8 +2,8 @@
  * RadioactivityAndStatisticsPreferencesModel.ts
  *
  * Model for the simulation-specific preferences shown in Preferences →
- * Simulation. Each Property takes its initial value from the corresponding
- * query parameter in radioactivityAndStatisticsQueryParameters.
+ * Simulation. Each preference Property takes its initial value from the
+ * corresponding query parameter in radioactivityAndStatisticsQueryParameters.
  */
 
 import { BooleanProperty, NumberProperty } from "scenerystack/axon";
