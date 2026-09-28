@@ -36,11 +36,13 @@ onReadyToLaunch(() => {
 
   const screens = [
     new SimulationScreen(simPreferences, {
+      // The screen name Property updates automatically when the locale changes
       name: stringManager.getScreenNames().simulationStringProperty,
       tandem: Tandem.ROOT.createTandem("simulationScreen"),
       backgroundColorProperty: RadioactivityAndStatisticsColors.backgroundColorProperty,
     }),
     new DeviceScreen(simPreferences, {
+      // The screen name Property updates automatically when the locale changes
       name: stringManager.getScreenNames().deviceStringProperty,
       tandem: Tandem.ROOT.createTandem("deviceScreen"),
       backgroundColorProperty: RadioactivityAndStatisticsColors.backgroundColorProperty,
@@ -68,6 +70,7 @@ onReadyToLaunch(() => {
       },
     }),
 
+    // Optional: fill in credits shown in Help → About
     credits: {
       softwareDevelopment: "OpenLyceum",
     },
