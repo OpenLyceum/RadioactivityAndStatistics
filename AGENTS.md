@@ -3,7 +3,9 @@
 Sim-specific context for AI assistants. General SceneryStack guidance:
 [OpenLyceum/.github/AGENTS.md](https://github.com/OpenLyceum/.github/blob/main/AGENTS.md).
 
-## What this sim is
+## Project
+
+### What this sim is
 
 A counting-statistics laboratory. Measure radioactive decay — simulated, or from
 a real **PASCO Wireless Geiger Counter (PS-3238)** over Web Bluetooth or a USB
@@ -39,7 +41,78 @@ changing the acquisition or hardware layers.
 | `src/RadioactivityAndStatisticsColors.ts` | All `ProfileColorProperty` instances, including the validated chart palette |
 | `src/RadioactivityAndStatisticsConstants.ts` | Layout, chart sizes, acquisition ranges, timing guards |
 
-## Things that will bite
+## Model
+
+Physics and behavior: `doc/model.md`.
+
+## Accessibility
+
+Follows the shared [OpenLyceum accessibility convention](https://github.com/OpenLyceum/Baton/blob/main/ACCESSIBILITY.md).
+A11y strings live under the `a11y` key of each locale JSON, read through `StringManager`.
+
+- Screen summaries: `src/device/view/DeviceScreenSummaryContent.ts`, `src/simulation/view/SimulationScreenSummaryContent.ts`
+- Keyboard Shortcuts dialog: `src/common/view/RadioactivityKeyboardHelpContent.ts`
+- Keyboard-draggable objects: none (no draggable play-area objects use a keyboard drag listener yet)
+
+## Compliance carve-outs
+
+None. Standard screen layout, root `*Colors.ts` / `*Constants.ts` /
+`*Namespace.ts`, six-section README, full a11y wiring.
+
+### `package.json` overrides
+
+JSON cannot carry comments, so the rationale for forced transitive pins lives
+here. Dependabot ignores these three names (see `.github/dependabot.yml`).
+
+| Override | Pin | Why |
+|---|---|---|
+| `lodash` | `~4.18.1` | SceneryStack declares `~4.17.12`. Bump clears advisories patched in 4.18.x (GHSA-r5fr-rjxr-66jc, GHSA-f23m-r3pf-42rh). |
+| `three` | `~0.125.2` | SceneryStack declares `^0.104.0`. Floor is 0.125.0 for GHSA-fq6p-x6j3-cmmq. **0.125.x still has open CVEs** (XSS GHSA-7vvq-7r29-5vg3, fixed only in ≥0.137.0). Remove if SceneryStack drops `three` or pins a patched line. |
+| `brace-expansion` | `~5.0.9` | Transitive via `vite-plugin-pwa` / Workbox. Clears npm audit (GHSA-mh99-v99m-4gvg; keep ≥5.0.9 for GHSA-rgw5-rvv9-x895). |
+
+`@types/web-bluetooth` and `@types/w3c-web-usb` are devDependencies and must stay
+in the `types` array of **both** `tsconfig.json` and `tsconfig.test.json` — the
+tests import `src` modules that reference the Web Bluetooth and WebUSB globals.
+
+## Testing
+
+Fleet-standard Vitest layout; unit tests live in root `tests/`, mirroring `src/`.
+
+```bash
+npm run lint && npm run check && npm run build && npm test
+```
+
+`npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`, so the About dialog always matches the release.
+
+### Hardware testing
+
+Requires a PASCO Wireless Geiger Counter, powered on, and Chrome or Edge on
+HTTPS or `localhost`. Either wire will do: Bluetooth, or a USB cable to the
+counter's own port. There is no way to exercise either transport in CI or in a
+headless environment — `tests/common/hardware/PascoProtocol.test.ts` covers the
+wire format, and everything above the transport is exercised through the
+simulated source.
+
+`scripts/probe/usb-probe.html` is the bring-up tool for the USB path, served by
+`node scripts/probe/probe-server.mjs`, which also collects its log to a file. It
+dumps what WebHID, Web Serial, and WebUSB each see, claims the bridge, sends
+arbitrary hex down the bulk pipe, and sweeps vendor control requests.
+
+To sanity-check a real device: connect, enable diagnostics, and watch the tube
+voltage. It should read 500 V. Zero there means no sample is being decoded, not
+a flat tube — check that the notify subscription is still on the device service.
+
+## Commands
+
+```bash
+npm run lint && npm run check && npm test && npm run build && npm run test:fuzz:quick
+```
+
+The standard scripts are listed in the README. `npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`.
+
+## Development notes
+
+### Things that will bite
 
 **Every device picker needs the user gesture.** Web Bluetooth's `requestDevice`
 and WebUSB's both open their picker only during a real user gesture, and a
@@ -105,7 +178,7 @@ Properties) per interval fires the whole derived chain, and the views with it,
 hundreds of times in a frame — which lengthens the frame, which enlarges the
 next `dt`. `step()` accumulates in locals and publishes once, at the end.
 
-## Query parameters
+### Query parameters
 
 | Parameter | Effect |
 |---|---|
@@ -118,72 +191,7 @@ next `dt`. `step()` accumulates in locals and publishes once, at the end.
 
 Also surfaced in Preferences → Simulation.
 
-## Hardware testing
-
-Requires a PASCO Wireless Geiger Counter, powered on, and Chrome or Edge on
-HTTPS or `localhost`. Either wire will do: Bluetooth, or a USB cable to the
-counter's own port. There is no way to exercise either transport in CI or in a
-headless environment — `tests/common/hardware/PascoProtocol.test.ts` covers the
-wire format, and everything above the transport is exercised through the
-simulated source.
-
-`scripts/probe/usb-probe.html` is the bring-up tool for the USB path, served by
-`node scripts/probe/probe-server.mjs`, which also collects its log to a file. It
-dumps what WebHID, Web Serial, and WebUSB each see, claims the bridge, sends
-arbitrary hex down the bulk pipe, and sweeps vendor control requests.
-
-To sanity-check a real device: connect, enable diagnostics, and watch the tube
-voltage. It should read 500 V. Zero there means no sample is being decoded, not
-a flat tube — check that the notify subscription is still on the device service.
-
-## Testing
-
-Fleet-standard Vitest layout; unit tests live in root `tests/`, mirroring `src/`.
-
-```bash
-npm run lint && npm run check && npm run build && npm test
-```
-
-`npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`, so the About dialog always matches the release.
-
-## Compliance carve-outs
-
-None. Standard screen layout, root `*Colors.ts` / `*Constants.ts` /
-`*Namespace.ts`, six-section README, full a11y wiring.
-
-### `package.json` overrides
-
-JSON cannot carry comments, so the rationale for forced transitive pins lives
-here. Dependabot ignores these three names (see `.github/dependabot.yml`).
-
-| Override | Pin | Why |
-|---|---|---|
-| `lodash` | `~4.18.1` | SceneryStack declares `~4.17.12`. Bump clears advisories patched in 4.18.x (GHSA-r5fr-rjxr-66jc, GHSA-f23m-r3pf-42rh). |
-| `three` | `~0.125.2` | SceneryStack declares `^0.104.0`. Floor is 0.125.0 for GHSA-fq6p-x6j3-cmmq. **0.125.x still has open CVEs** (XSS GHSA-7vvq-7r29-5vg3, fixed only in ≥0.137.0). Remove if SceneryStack drops `three` or pins a patched line. |
-| `brace-expansion` | `~5.0.9` | Transitive via `vite-plugin-pwa` / Workbox. Clears npm audit (GHSA-mh99-v99m-4gvg; keep ≥5.0.9 for GHSA-rgw5-rvv9-x895). |
-
-`@types/web-bluetooth` and `@types/w3c-web-usb` are devDependencies and must stay
-in the `types` array of **both** `tsconfig.json` and `tsconfig.test.json` — the
-tests import `src` modules that reference the Web Bluetooth and WebUSB globals.
-
-## PWA
+### PWA
 
 After `npm run build`, the sim is installable offline via Workbox
 (`dist/manifest.webmanifest`).
-
-## Accessibility
-
-Follows the shared [OpenLyceum accessibility convention](https://github.com/OpenLyceum/Baton/blob/main/ACCESSIBILITY.md).
-A11y strings live under the `a11y` key of each locale JSON, read through `StringManager`.
-
-- Screen summaries: `src/device/view/DeviceScreenSummaryContent.ts`, `src/simulation/view/SimulationScreenSummaryContent.ts`
-- Keyboard Shortcuts dialog: `src/common/view/RadioactivityKeyboardHelpContent.ts`
-- Keyboard-draggable objects: none (no draggable play-area objects use a keyboard drag listener yet)
-
-## Commands
-
-```bash
-npm run lint && npm run check && npm test && npm run build && npm run test:fuzz:quick
-```
-
-The standard scripts are listed in the README. `npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`.
