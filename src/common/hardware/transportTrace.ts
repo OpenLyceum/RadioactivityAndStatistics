@@ -8,11 +8,11 @@
  * counter's actual behaviour can be read off the console during bring-up.
  */
 
-const parameters = typeof window === "undefined" ? null : new URLSearchParams(window.location.search);
+import radioactivityAndStatisticsQueryParameters from "../../preferences/radioactivityAndStatisticsQueryParameters.js";
 
-/** Whether byte-level tracing is on. */
+/** Whether byte-level tracing is on. Read from the sim query-parameter schema. */
 export const TRANSPORT_TRACE_ENABLED =
-  parameters?.get("debugTransport") === "true" || parameters?.get("debugBluetooth") === "true";
+  radioactivityAndStatisticsQueryParameters.debugTransport || radioactivityAndStatisticsQueryParameters.debugBluetooth;
 
 /** Formats bytes as space-separated hex, the form used in the capture logs. */
 export function toHex(bytes: Uint8Array): string {

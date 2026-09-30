@@ -22,6 +22,7 @@
  */
 
 import { BooleanProperty, NumberProperty, Property, type TReadOnlyProperty } from "scenerystack/axon";
+import radioactivityAndStatisticsQueryParameters from "../../preferences/radioactivityAndStatisticsQueryParameters.js";
 import { GeigerCounterDevice } from "../hardware/GeigerCounterDevice.js";
 import {
   DeviceSelectionCancelled,
@@ -52,17 +53,12 @@ export type GeigerDeviceControls = {
 const DEFAULT_POLL_INTERVAL_MS = 100;
 
 /**
- * TEMPORARY: `?pollIntervalMs=N` overrides the polling period, so the CountRate
- * register's behaviour can be identified by seeing whether its magnitude scales
- * with the gap between reads. Remove with the tracing in transportTrace.ts.
+ * `?pollIntervalMs=N` overrides the polling period, so the CountRate register's
+ * behaviour can be identified by seeing whether its magnitude scales with the
+ * gap between reads. Parsed by QueryStringMachine; invalid values keep the default.
  */
-const POLL_INTERVAL_MS = (() => {
-  if (typeof window === "undefined") {
-    return DEFAULT_POLL_INTERVAL_MS;
-  }
-  const requested = Number(new URLSearchParams(window.location.search).get("pollIntervalMs"));
-  return Number.isFinite(requested) && requested > 0 ? requested : DEFAULT_POLL_INTERVAL_MS;
-})();
+const POLL_INTERVAL_MS =
+  typeof window === "undefined" ? DEFAULT_POLL_INTERVAL_MS : radioactivityAndStatisticsQueryParameters.pollIntervalMs;
 
 /** Consecutive failed reads tolerated before the connection is declared bad. */
 const MAXIMUM_CONSECUTIVE_FAILURES = 10;

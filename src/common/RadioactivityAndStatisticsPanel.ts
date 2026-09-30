@@ -31,11 +31,11 @@ import { Panel, type PanelOptions } from "scenerystack/sun";
 import RadioactivityAndStatisticsColors from "../RadioactivityAndStatisticsColors.js";
 import { PANEL_CORNER_RADIUS } from "../RadioactivityAndStatisticsConstants.js";
 
-export type SimPanelOptions = PanelOptions;
+export type RadioactivityAndStatisticsPanelOptions = PanelOptions;
 
 export class RadioactivityAndStatisticsPanel extends Panel {
-  public constructor(content: Node, providedOptions?: SimPanelOptions) {
-    const options = optionize<SimPanelOptions, EmptySelfOptions, PanelOptions>()(
+  public constructor(content: Node, providedOptions?: RadioactivityAndStatisticsPanelOptions) {
+    const options = optionize<RadioactivityAndStatisticsPanelOptions, EmptySelfOptions, PanelOptions>()(
       {
         fill: RadioactivityAndStatisticsColors.panelBackgroundColorProperty,
         stroke: RadioactivityAndStatisticsColors.panelBorderColorProperty,

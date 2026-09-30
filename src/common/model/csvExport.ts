@@ -9,6 +9,7 @@
  * and under what conditions.
  */
 
+import { toFixedNumber } from "scenerystack/dot";
 import { type CountSample, countRate } from "./CountSample.js";
 import type { Histogram } from "./Histogram.js";
 import { poissonExpectation } from "./Histogram.js";
@@ -107,9 +108,9 @@ function histogramSection(histogram: Histogram, mean: number): string[] {
   return lines;
 }
 
-/** Rounds to the export precision without trailing zeros. */
+/** Rounds to the export precision. */
 function round(value: number): number {
-  return Number.parseFloat(value.toFixed(DECIMAL_PLACES));
+  return toFixedNumber(value, DECIMAL_PLACES);
 }
 
 /** Quotes a field if it contains a comma, quote, or newline. */

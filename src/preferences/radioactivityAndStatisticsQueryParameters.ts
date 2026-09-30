@@ -87,6 +87,29 @@ const radioactivityAndStatisticsQueryParameters = QueryStringMachine.getAll({
     defaultValue: false,
     public: true,
   },
+
+  /**
+   * Byte-level tracing for the hardware transports. Developer-only; not public.
+   * `debugBluetooth` is the older name for the same switch.
+   */
+  debugTransport: {
+    type: "boolean" as const,
+    defaultValue: false,
+  },
+  debugBluetooth: {
+    type: "boolean" as const,
+    defaultValue: false,
+  },
+
+  /**
+   * How often a connected Geiger counter is polled, in milliseconds.
+   * Developer-only; not public. Used to see whether CountRate scales with the gap between reads.
+   */
+  pollIntervalMs: {
+    type: "number" as const,
+    defaultValue: 100,
+    isValidValue: (value: number) => Number.isFinite(value) && value > 0,
+  },
 });
 
 RadioactivityAndStatisticsNamespace.register(

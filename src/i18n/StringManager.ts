@@ -74,7 +74,7 @@ export type ScreenControlA11yStrings = {
   readonly binWidthControlStringProperty: ReadOnlyProperty<string>;
 };
 
-export type SimA11yStrings = {
+export type RadioactivityAndStatisticsA11yStrings = {
   readonly screenSummary: {
     readonly playAreaStringProperty: ReadOnlyProperty<string>;
     readonly controlAreaStringProperty: ReadOnlyProperty<string>;
@@ -86,9 +86,9 @@ export type SimA11yStrings = {
 
 /**
  * Explicit Preferences → Simulation labels from {@link StringManager.getPreferences}.
- * Same sync rule as {@link SimA11yStrings}.
+ * Same sync rule as {@link RadioactivityAndStatisticsA11yStrings}.
  */
-export type SimPreferenceStrings = {
+export type RadioactivityAndStatisticsPreferenceStrings = {
   readonly titleStringProperty: ReadOnlyProperty<string>;
   readonly showDiagnosticsStringProperty: ReadOnlyProperty<string>;
   readonly showDiagnosticsDescriptionStringProperty: ReadOnlyProperty<string>;
