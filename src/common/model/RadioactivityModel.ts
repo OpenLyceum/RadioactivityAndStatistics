@@ -379,9 +379,10 @@ export class RadioactivityModel implements TModel {
 
         if (this.isRecordingProperty.value) {
           appended ??= [];
+          const previous = appended.at(-1) ?? samples.at(-1);
           appended.push({
             index: sampleCount + 1,
-            startTime: sampleCount * interval,
+            startTime: previous ? previous.startTime + previous.duration : 0,
             duration: interval,
             counts,
           });

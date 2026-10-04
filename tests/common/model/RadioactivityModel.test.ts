@@ -22,6 +22,19 @@ function advance(model: RadioactivityModel, seconds: number, step = 0.5): void {
 }
 
 describe("RadioactivityModel", () => {
+  it("keeps sample timestamps contiguous when resuming with a different interval", () => {
+    const model = new RadioactivityModel();
+    model.countingIntervalProperty.value = 2;
+    model.startRecording();
+    advance(model, 4);
+    model.stopRecording();
+    model.countingIntervalProperty.value = 1;
+    model.startRecording();
+    advance(model, 1);
+    expect(model.samplesProperty.value.map((sample) => sample.startTime)).toEqual([0, 2, 4]);
+    model.dispose();
+  });
+
   let model: RadioactivityModel;
 
   beforeEach(() => {
