@@ -68,7 +68,7 @@ here. Dependabot ignores these three names (see `.github/dependabot.yml`).
 |---|---|---|
 | `lodash` | `~4.18.1` | SceneryStack declares `~4.17.12`. Bump clears advisories patched in 4.18.x (GHSA-r5fr-rjxr-66jc, GHSA-f23m-r3pf-42rh). |
 | `three` | `~0.125.2` | SceneryStack declares `^0.104.0`. Floor is 0.125.0 for GHSA-fq6p-x6j3-cmmq. **0.125.x still has open CVEs** (XSS GHSA-7vvq-7r29-5vg3, fixed only in ≥0.137.0). Remove if SceneryStack drops `three` or pins a patched line. |
-| `brace-expansion` | `~5.0.9` | Transitive via `vite-plugin-pwa` / Workbox. Clears npm audit (GHSA-mh99-v99m-4gvg; keep ≥5.0.9 for GHSA-rgw5-rvv9-x895). |
+| `brace-expansion` | `~5.0.12` | Transitive via `vite-plugin-pwa` / Workbox. Clears npm audit (GHSA-mh99-v99m-4gvg; keep ≥5.0.9 for GHSA-rgw5-rvv9-x895; ≥5.0.12 for the CPU-DoS advisory). |
 
 `@types/web-bluetooth` and `@types/w3c-web-usb` are devDependencies and must stay
 in the `types` array of **both** `tsconfig.json` and `tsconfig.test.json` — the
