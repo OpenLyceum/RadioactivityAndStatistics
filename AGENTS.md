@@ -56,33 +56,11 @@ A11y strings live under the `a11y` key of each locale JSON, read through `String
 
 ## Compliance carve-outs
 
-None. Standard screen layout, root `*Colors.ts` / `*Constants.ts` /
-`*Namespace.ts`, six-section README, full a11y wiring.
-
-### `package.json` overrides
-
-JSON cannot carry comments, so the rationale for forced transitive pins lives
-here. Dependabot ignores these three names (see `.github/dependabot.yml`).
-
-| Override | Pin | Why |
-|---|---|---|
-| `lodash` | `~4.18.1` | SceneryStack declares `~4.17.12`. Bump clears advisories patched in 4.18.x (GHSA-r5fr-rjxr-66jc, GHSA-f23m-r3pf-42rh). |
-| `three` | `~0.125.2` | SceneryStack declares `^0.104.0`. Floor is 0.125.0 for GHSA-fq6p-x6j3-cmmq. **0.125.x still has open CVEs** (XSS GHSA-7vvq-7r29-5vg3, fixed only in ≥0.137.0). Remove if SceneryStack drops `three` or pins a patched line. |
-| `brace-expansion` | `~5.0.12` | Transitive via `vite-plugin-pwa` / Workbox. Clears npm audit (GHSA-mh99-v99m-4gvg; keep ≥5.0.9 for GHSA-rgw5-rvv9-x895; ≥5.0.12 for the CPU-DoS advisory). |
-
 `@types/web-bluetooth` and `@types/w3c-web-usb` are devDependencies and must stay
 in the `types` array of **both** `tsconfig.json` and `tsconfig.test.json` — the
 tests import `src` modules that reference the Web Bluetooth and WebUSB globals.
 
 ## Testing
-
-Fleet-standard Vitest layout; unit tests live in root `tests/`, mirroring `src/`.
-
-```bash
-npm run lint && npm run check && npm run build && npm test
-```
-
-`npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`, so the About dialog always matches the release.
 
 ### Hardware testing
 
@@ -101,14 +79,6 @@ arbitrary hex down the bulk pipe, and sweeps vendor control requests.
 To sanity-check a real device: connect, enable diagnostics, and watch the tube
 voltage. It should read 500 V. Zero there means no sample is being decoded, not
 a flat tube — check that the notify subscription is still on the device service.
-
-## Commands
-
-```bash
-npm run lint && npm run check && npm test && npm run build && npm run test:fuzz:quick
-```
-
-The standard scripts are listed in the README. `npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`.
 
 ## Development notes
 
