@@ -337,7 +337,7 @@ document.getElementById("usb-claim").addEventListener("click", async () => {
 
     usbDevice = device;
     usbReading = true;
-    readLoop();
+    readLoop().catch((error) => log("read loop failed:", error));
 
     for (const id of ["usb-read", "usb-keepalive"]) {
       document.getElementById(id).disabled = false;
@@ -513,7 +513,7 @@ document.getElementById("usb-control-out").addEventListener("click", async () =>
     log("sweep done: every accepted request left the bulk pipe echoing.");
   }
   usbReading = true;
-  readLoop();
+  readLoop().catch((error) => log("read loop failed:", error));
 });
 
 /** Parses "05 04" / "0504" / "05,04" into bytes. */
@@ -535,7 +535,7 @@ document.getElementById("usb-send-hex").addEventListener("click", () => {
     log("nothing to send — enter hex bytes.");
     return;
   }
-  sendBulk("custom", bytes);
+  sendBulk("custom", bytes).catch((error) => log("send failed:", error));
 });
 
 // A 64-byte packet is what the endpoint's packet size suggests the bridge may
@@ -544,7 +544,7 @@ document.getElementById("usb-send-padded").addEventListener("click", () => {
   const bytes = parseHex(document.getElementById("usb-hex").value);
   const padded = new Uint8Array(64);
   padded.set(bytes.slice(0, 64));
-  sendBulk("custom padded to 64", padded);
+  sendBulk("custom padded to 64", padded).catch((error) => log("send failed:", error));
 });
 
 document.getElementById("usb-read").addEventListener("click", () => sendBulk("READ_ONE_SAMPLE", [0x05, 0x04]));

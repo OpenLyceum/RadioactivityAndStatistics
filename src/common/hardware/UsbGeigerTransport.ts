@@ -158,7 +158,10 @@ export class UsbGeigerTransport implements TGeigerTransport {
 
     this.isReading = true;
     // Deliberately not awaited: the loop runs for the life of the connection.
-    this.readLoop();
+    this.readLoop().catch((error: unknown) => {
+      // readLoop() handles transfer failures itself; this catches a throwing onPacket callback.
+      trace("usb", "read loop FAILED", error);
+    });
   }
 
   /** Sends a command addressed to the counting sensor's channel. */
