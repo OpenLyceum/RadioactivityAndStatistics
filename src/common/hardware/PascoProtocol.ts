@@ -91,7 +91,7 @@ export const COMMAND = {
  * `GMEnableBeeper` (wasm), which write these to channel 0's command
  * characteristic — the same one used for one-shot sample reads.
  */
-export const GEIGER_CONTROL = {
+const GEIGER_CONTROL = {
   /** Set the G-M tube bias: two little-endian uint16 voltages in volts. */
   SET_VOLTAGE: 0x01,
   /** Enable or silence the audible count beep: one byte, 1 or 0. */
@@ -106,23 +106,13 @@ export const RESPONSE = {
   STATUS_OK: 0x00,
 } as const;
 
-/**
- * Streamed-sample packets are tagged with a rolling sequence number in the
- * first byte; anything at or below this value is periodic data rather than a
- * command response.
- */
-export const MAX_STREAM_SEQUENCE = 0x1f;
-
 // ── Wireless Geiger Counter (PS-3238) device tables ───────────────────────────
 
 /** Interface id of the Wireless Geiger Counter, from the datasheet XML. */
 export const GEIGER_INTERFACE_ID = 1064;
 
-/** Sensor id behind channel 0 of that interface (`WirelessGM`). */
-export const GEIGER_SENSOR_ID = 2079;
-
-/** Channel the counting sensor sits on, hence service GEIGER_CHANNEL_ID + 1. */
-export const GEIGER_CHANNEL_ID = 0;
+/** Channel the counting sensor sits on, hence service id = channel + 1. */
+const GEIGER_CHANNEL_ID = 0;
 
 /** Service that carries the counting sensor's command/notify characteristics. */
 export const GEIGER_SERVICE_ID = GEIGER_CHANNEL_ID + 1;
@@ -150,13 +140,6 @@ export const GEIGER_ADVERTISED_NAME = "Geiger Counter";
  *   - TubeVoltage GM tube bias, nominally 450–600 V
  */
 export const GEIGER_SAMPLE_BYTES = 4;
-
-/**
- * Typical healthy-tube bias as reported by the TubeVoltage measurement.
- *
- * The software-controlled range is wider; see {@link TUBE_VOLTAGE_CONTROL_RANGE}.
- */
-export const TUBE_VOLTAGE_RANGE = { min: 450, max: 600 } as const;
 
 /**
  * G-M tube bias the host may set, in volts.
@@ -276,7 +259,7 @@ export function decodeGeigerPayload(payload: Uint8Array): GeigerSample | null {
 }
 
 /** Reads a little-endian unsigned 16-bit integer. */
-export function readUint16LE(bytes: Uint8Array, offset: number): number {
+function readUint16LE(bytes: Uint8Array, offset: number): number {
   return (bytes[offset] ?? 0) | ((bytes[offset + 1] ?? 0) << 8);
 }
 

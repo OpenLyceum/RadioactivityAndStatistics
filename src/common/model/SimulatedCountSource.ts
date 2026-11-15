@@ -31,7 +31,7 @@ const KNUTH_ALGORITHM_LIMIT = 30;
  * below e^(−λ) — which is exact. Large means use a rounded Gaussian of matching
  * mean and variance, clamped at zero.
  */
-export function samplePoisson(mean: number): number {
+function samplePoisson(mean: number): number {
   if (!(mean > 0 && Number.isFinite(mean))) {
     return 0;
   }

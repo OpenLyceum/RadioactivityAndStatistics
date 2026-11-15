@@ -162,7 +162,7 @@ const LANCZOS_COEFFICIENTS = [
  * Working in logs is what keeps the Poisson formula usable: at λ = 200 both
  * λ^k and k! overflow a double long before their ratio does.
  */
-export function logGamma(x: number): number {
+function logGamma(x: number): number {
   if (x < 0.5) {
     // Reflection formula, for arguments where the series below is inaccurate.
     return Math.log(Math.PI / Math.sin(Math.PI * x)) - logGamma(1 - x);

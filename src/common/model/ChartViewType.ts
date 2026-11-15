@@ -16,6 +16,3 @@ export const ChartViewType = {
 } as const;
 
 export type ChartViewTypeValue = (typeof ChartViewType)[keyof typeof ChartViewType];
-
-/** Ordered for the view-choice radio button group. */
-export const CHART_VIEW_TYPES: readonly ChartViewTypeValue[] = [ChartViewType.HISTOGRAM, ChartViewType.COUNT_RATE];

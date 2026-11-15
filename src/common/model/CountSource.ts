@@ -26,12 +26,6 @@ export const CountSourceType = {
 
 export type CountSourceTypeValue = (typeof CountSourceType)[keyof typeof CountSourceType];
 
-/** Ordered for radio-button groups and combo boxes. */
-export const COUNT_SOURCE_TYPES: readonly CountSourceTypeValue[] = [
-  CountSourceType.SIMULATED,
-  CountSourceType.GEIGER_COUNTER,
-];
-
 /** A source of counting events. */
 export type TCountSource = {
   /** Which kind of source this is. */

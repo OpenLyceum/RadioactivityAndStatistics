@@ -120,7 +120,7 @@ export class CountTally {
 }
 
 /** Builds a tally from a complete data set. */
-export function createTally(values: readonly number[]): CountTally {
+function createTally(values: readonly number[]): CountTally {
   const tally = new CountTally();
   for (const value of values) {
     tally.add(value);

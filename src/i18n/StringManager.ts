@@ -74,32 +74,6 @@ export type ScreenControlA11yStrings = {
   readonly binWidthControlStringProperty: ReadOnlyProperty<string>;
 };
 
-export type RadioactivityAndStatisticsA11yStrings = {
-  readonly screenSummary: {
-    readonly playAreaStringProperty: ReadOnlyProperty<string>;
-    readonly controlAreaStringProperty: ReadOnlyProperty<string>;
-    readonly interactionHintStringProperty: ReadOnlyProperty<string>;
-  };
-  readonly currentDetailsStringProperty: ReadOnlyProperty<string>;
-  readonly controls: ScreenControlA11yStrings;
-};
-
-/**
- * Explicit Preferences → Simulation labels from {@link StringManager.getPreferences}.
- * Same sync rule as {@link RadioactivityAndStatisticsA11yStrings}.
- */
-export type RadioactivityAndStatisticsPreferenceStrings = {
-  readonly titleStringProperty: ReadOnlyProperty<string>;
-  readonly showDiagnosticsStringProperty: ReadOnlyProperty<string>;
-  readonly showDiagnosticsDescriptionStringProperty: ReadOnlyProperty<string>;
-  readonly beepEnabledStringProperty: ReadOnlyProperty<string>;
-  readonly beepEnabledDescriptionStringProperty: ReadOnlyProperty<string>;
-  readonly tubeVoltageStringProperty: ReadOnlyProperty<string>;
-  readonly tubeVoltageDescriptionStringProperty: ReadOnlyProperty<string>;
-  readonly showSamplesPerRunControlStringProperty: ReadOnlyProperty<string>;
-  readonly showSamplesPerRunControlDescriptionStringProperty: ReadOnlyProperty<string>;
-};
-
 /**
  * StringManager is a singleton that provides typed access to all localized
  * strings. Use `StringManager.getInstance()` everywhere — never construct it

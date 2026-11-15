@@ -58,16 +58,11 @@ export function getTransportStatus(kind: TransportKindValue): TransportStatusVal
 }
 
 /** Whether a connection can be attempted at all over one wire. */
-export function isTransportAvailable(kind: TransportKindValue): boolean {
+function isTransportAvailable(kind: TransportKindValue): boolean {
   return getTransportStatus(kind) === TransportStatus.AVAILABLE;
 }
 
 /** Every wire this browser can reach a counter over, in the order offered. */
 export function getAvailableTransports(): readonly TransportKindValue[] {
   return [TransportKind.BLUETOOTH, TransportKind.USB].filter(isTransportAvailable);
-}
-
-/** Clears the cached answers. Exists for unit tests. */
-export function clearTransportStatusCache(): void {
-  cachedStatus.clear();
 }
