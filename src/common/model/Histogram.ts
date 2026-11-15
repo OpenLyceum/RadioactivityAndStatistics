@@ -28,7 +28,10 @@ export type Histogram = {
   readonly maximumBinCount: number;
 };
 
-/** An empty histogram, so views never have to special-case "no data yet". */
+/**
+ * An empty histogram, so views never have to special-case "no data yet".
+ * @internal Exported for unit tests; not part of the application API.
+ */
 export const EMPTY_HISTOGRAM: Histogram = {
   binWidth: 1,
   minimumEdge: 0,
@@ -166,7 +169,10 @@ export function chooseBinWidthOf(tally: CountTally): number {
   return Math.max(1, width);
 }
 
-/** {@link chooseBinWidthOf} for a caller holding a plain array. */
+/**
+ * {@link chooseBinWidthOf} for a caller holding a plain array.
+ * @internal Exported for unit tests; not part of the application API.
+ */
 export function chooseBinWidth(values: readonly number[]): number {
   return chooseBinWidthOf(createTally(values));
 }
@@ -250,7 +256,10 @@ export function createHistogramOf(tally: CountTally, binWidth?: number): Histogr
   };
 }
 
-/** {@link createHistogramOf} for a caller holding a plain array. */
+/**
+ * {@link createHistogramOf} for a caller holding a plain array.
+ * @internal Exported for unit tests; not part of the application API.
+ */
 export function createHistogram(values: readonly number[], binWidth?: number): Histogram {
   return createHistogramOf(createTally(values), binWidth);
 }

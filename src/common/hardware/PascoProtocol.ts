@@ -98,7 +98,10 @@ const GEIGER_CONTROL = {
   ENABLE_BEEPER: 0x02,
 } as const;
 
-/** Response opcodes appearing in the first byte of a notification. */
+/**
+ * Response opcodes appearing in the first byte of a notification.
+ * @internal Exported for unit tests; not part of the application API.
+ */
 export const RESPONSE = {
   /** Generic result packet: [0xc0, status, echoedOpcode, ...payload]. */
   RESULT: 0xc0,
@@ -108,7 +111,10 @@ export const RESPONSE = {
 
 // ── Wireless Geiger Counter (PS-3238) device tables ───────────────────────────
 
-/** Interface id of the Wireless Geiger Counter, from the datasheet XML. */
+/**
+ * Interface id of the Wireless Geiger Counter, from the datasheet XML.
+ * @internal Exported for unit tests; not part of the application API.
+ */
 export const GEIGER_INTERFACE_ID = 1064;
 
 /** Channel the counting sensor sits on, hence service id = channel + 1. */
@@ -247,6 +253,7 @@ export function decodeGeigerNotification(data: Uint8Array): GeigerSample | null 
  *
  * Returns null if the payload is short. Measurements are consumed in datasheet
  * order, each little-endian over its own DataSize.
+ * @internal Exported for unit tests; not part of the application API.
  */
 export function decodeGeigerPayload(payload: Uint8Array): GeigerSample | null {
   if (payload.length < GEIGER_SAMPLE_BYTES) {
@@ -269,6 +276,7 @@ function readUint16LE(bytes: Uint8Array, offset: number): number {
  *
  *   '0'–'9' → 0–9      'K'–'Z' → 10–25    'A'–'J' → 26–35
  *   'a'–'z' → 36–61    '*'     → 62       '#'     → 63
+ * @internal Exported for unit tests; not part of the application API.
  */
 export function decodePascoBase64(character: string): number {
   if (character.length !== 1) {

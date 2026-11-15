@@ -43,7 +43,10 @@ export type SampleStatistics = {
   readonly total: number;
 };
 
-/** Statistics of an empty data set: everything zero, nothing NaN. */
+/**
+ * Statistics of an empty data set: everything zero, nothing NaN.
+ * @internal Exported for unit tests; not part of the application API.
+ */
 export const EMPTY_STATISTICS: SampleStatistics = {
   sampleCount: 0,
   mean: 0,
@@ -139,6 +142,7 @@ export function statisticsOf(state: StatisticsAccumulator): SampleStatistics {
  *
  * The batch form, for callers holding an array they will not extend — the CSV
  * export, and the tests. A live run uses {@link accumulateValue} instead.
+ * @internal Exported for unit tests; not part of the application API.
  */
 export function computeStatistics(values: readonly number[]): SampleStatistics {
   let state = EMPTY_ACCUMULATOR;
@@ -177,7 +181,10 @@ function logGamma(x: number): number {
   return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(series);
 }
 
-/** Natural log of n! for non-negative integers. */
+/**
+ * Natural log of n! for non-negative integers.
+ * @internal Exported for unit tests; not part of the application API.
+ */
 export function logFactorial(n: number): number {
   return logGamma(n + 1);
 }
