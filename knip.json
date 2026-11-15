@@ -3,7 +3,7 @@
   "project": ["src/**/*.ts", "scripts/**/*.{ts,js,mjs,cjs}", "tests/**/*.ts", "*.{ts,js,mjs,cjs}"],
   "entry": ["scripts/probe/probe-server.mjs", "scripts/probe/usb-probe.js"],
   "ignoreFiles": [],
-  "ignoreDependencies": [],
+  "ignoreDependencies": ["@swc/core"],
   "ignoreUnresolved": [],
   "ignoreBinaries": []
 }
