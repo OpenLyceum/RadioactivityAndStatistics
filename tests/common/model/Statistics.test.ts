@@ -1,3 +1,4 @@
+import { computeStatistics } from "../../helpers/sampleSummaries.js";
 /**
  * Unit tests for descriptive statistics and the distributions the sim compares
  * measurements against.
@@ -6,7 +7,6 @@
 import { describe, expect, it } from "vitest";
 import {
   accumulateValue,
-  computeStatistics,
   EMPTY_ACCUMULATOR,
   EMPTY_STATISTICS,
   gaussianDensity,

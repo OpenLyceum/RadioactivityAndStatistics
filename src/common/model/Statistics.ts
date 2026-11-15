@@ -137,21 +137,6 @@ export function statisticsOf(state: StatisticsAccumulator): SampleStatistics {
   };
 }
 
-/**
- * Computes descriptive statistics of a complete data set in a single pass.
- *
- * The batch form, for callers holding an array they will not extend — the CSV
- * export, and the tests. A live run uses {@link accumulateValue} instead.
- * @internal Exported for unit tests; not part of the application API.
- */
-export function computeStatistics(values: readonly number[]): SampleStatistics {
-  let state = EMPTY_ACCUMULATOR;
-  for (const value of values) {
-    state = accumulateValue(state, value);
-  }
-  return statisticsOf(state);
-}
-
 // ── Distributions ────────────────────────────────────────────────────────────
 
 /** Lanczos coefficients (g = 7, n = 9) for the log-gamma approximation. */

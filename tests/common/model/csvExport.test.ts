@@ -1,3 +1,4 @@
+import { computeStatistics, createHistogram } from "../../helpers/sampleSummaries.js";
 /**
  * Unit tests for CSV serialization.
  *
@@ -9,8 +10,6 @@
 import { describe, expect, it } from "vitest";
 import type { CountSample } from "../../../src/common/model/CountSample.js";
 import { createExportFilename, samplesToCsv } from "../../../src/common/model/csvExport.js";
-import { createHistogram } from "../../../src/common/model/Histogram.js";
-import { computeStatistics } from "../../../src/common/model/Statistics.js";
 
 const SAMPLES: CountSample[] = [
   { index: 1, startTime: 0, duration: 1, counts: 18 },

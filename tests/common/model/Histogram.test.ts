@@ -1,15 +1,10 @@
+import { chooseBinWidth, createHistogram } from "../../helpers/sampleSummaries.js";
 /**
  * Unit tests for binning and the expected-frequency curves.
  */
 
 import { describe, expect, it } from "vitest";
-import {
-  chooseBinWidth,
-  createHistogram,
-  EMPTY_HISTOGRAM,
-  gaussianCurve,
-  poissonExpectation,
-} from "../../../src/common/model/Histogram.js";
+import { EMPTY_HISTOGRAM, gaussianCurve, poissonExpectation } from "../../../src/common/model/Histogram.js";
 
 describe("createHistogram", () => {
   it("returns the empty histogram for no data", () => {

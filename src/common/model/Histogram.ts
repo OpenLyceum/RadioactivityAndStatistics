@@ -76,7 +76,7 @@ const MAXIMUM_TARGET_BINS = 30;
  * does not.
  *
  * Mutable by design: it is a live accumulator, folded forward one measurement
- * at a time. The pure array functions below build one and throw it away.
+ * at a time.
  */
 export class CountTally {
   /** frequencies[value] — how many measurements came out exactly `value`. */
@@ -122,15 +122,6 @@ export class CountTally {
   }
 }
 
-/** Builds a tally from a complete data set. */
-function createTally(values: readonly number[]): CountTally {
-  const tally = new CountTally();
-  for (const value of values) {
-    tally.add(value);
-  }
-  return tally;
-}
-
 /**
  * Chooses an integer bin width using the Freedman–Diaconis rule, then keeps the
  * resulting bin count inside a legible range.
@@ -167,14 +158,6 @@ export function chooseBinWidthOf(tally: CountTally): number {
   }
 
   return Math.max(1, width);
-}
-
-/**
- * {@link chooseBinWidthOf} for a caller holding a plain array.
- * @internal Exported for unit tests; not part of the application API.
- */
-export function chooseBinWidth(values: readonly number[]): number {
-  return chooseBinWidthOf(createTally(values));
 }
 
 /**
@@ -254,14 +237,6 @@ export function createHistogramOf(tally: CountTally, binWidth?: number): Histogr
     totalSamples: tally.totalSamples,
     maximumBinCount,
   };
-}
-
-/**
- * {@link createHistogramOf} for a caller holding a plain array.
- * @internal Exported for unit tests; not part of the application API.
- */
-export function createHistogram(values: readonly number[], binWidth?: number): Histogram {
-  return createHistogramOf(createTally(values), binWidth);
 }
 
 /**

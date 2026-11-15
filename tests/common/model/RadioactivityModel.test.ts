@@ -1,3 +1,4 @@
+import { computeStatistics, createHistogram } from "../../helpers/sampleSummaries.js";
 /**
  * Unit tests for the shared acquisition model — the counting cycle, the run,
  * and the way the two count sources plug into it.
@@ -9,9 +10,8 @@
 import { Range } from "scenerystack/dot";
 import { beforeEach, describe, expect, it } from "vitest";
 import { CountSourceType } from "../../../src/common/model/CountSource.js";
-import { createHistogram } from "../../../src/common/model/Histogram.js";
+
 import { RadioactivityModel } from "../../../src/common/model/RadioactivityModel.js";
-import { computeStatistics } from "../../../src/common/model/Statistics.js";
 
 /** Advances the model by `seconds`, in steps the model will not clamp. */
 function advance(model: RadioactivityModel, seconds: number, step = 0.5): void {
