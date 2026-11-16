@@ -16,12 +16,13 @@ import { Shape } from "scenerystack/kite";
 import { Circle, Line, Node, Path, Rectangle } from "scenerystack/scenery";
 import { ScreenIcon } from "scenerystack/sim";
 import RadioactivityAndStatisticsColors from "../RadioactivityAndStatisticsColors.js";
+import { RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS } from "../RadioactivityAndStatisticsConstants.js";
 
 const W = 548;
 const H = 373;
 
 /** Inset of the drawing area from the icon edge. */
-const INSET = 60;
+const INSET: number = RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.INSET;
 
 function background(): Rectangle {
   return new Rectangle(0, 0, W, H, { fill: RadioactivityAndStatisticsColors.backgroundColorProperty });
@@ -69,17 +70,17 @@ export function createSimulationIcon(): ScreenIcon {
         background(),
         new Line(left, y(meanFraction), right, y(meanFraction), {
           stroke: RadioactivityAndStatisticsColors.chartAxisColorProperty,
-          lineWidth: 5,
-          lineDash: [16, 12],
+          lineWidth: RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.CREATE_SIMULATION_ICON_LINE_WIDTH,
+          lineDash: [RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.CREATE_SIMULATION_ICON_LINE_DASH_DASH, 12],
         }),
         new Path(traceShape, {
           stroke: RadioactivityAndStatisticsColors.countRateTraceColorProperty,
-          lineWidth: 8,
+          lineWidth: RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.CREATE_SIMULATION_ICON_ITEM_3_LINE_WIDTH,
           lineJoin: "round",
         }),
         ...samples.map(
           (fraction, index) =>
-            new Circle(10, {
+            new Circle(RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.CREATE_SIMULATION_ICON_RADIUS, {
               fill: RadioactivityAndStatisticsColors.countRateTraceColorProperty,
               centerX: x(index),
               centerY: y(fraction),
@@ -114,7 +115,7 @@ export function createDeviceIcon(): ScreenIcon {
   const amplitude = (bottom - top) * 0.95;
 
   const curveShape = new Shape();
-  const pointCount = 60;
+  const pointCount: number = RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.POINT_COUNT;
   for (let i = 0; i <= pointCount; i++) {
     const px = left + ((right - left) * i) / pointCount;
     const z = (px - mean) / deviation;
@@ -133,7 +134,7 @@ export function createDeviceIcon(): ScreenIcon {
         ...barNodes,
         new Path(curveShape, {
           stroke: RadioactivityAndStatisticsColors.poissonCurveColorProperty,
-          lineWidth: 8,
+          lineWidth: RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.CREATE_DEVICE_ICON_LINE_WIDTH,
           lineJoin: "round",
         }),
       ],

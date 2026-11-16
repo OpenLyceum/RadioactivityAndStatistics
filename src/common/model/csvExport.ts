@@ -1,3 +1,4 @@
+import { CSV_EXPORT_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * csvExport.ts
  *
@@ -34,7 +35,7 @@ export type ExportContext = {
 };
 
 /** Number of decimal places used for derived (non-integer) columns. */
-const DECIMAL_PLACES = 4;
+const DECIMAL_PLACES: number = CSV_EXPORT_SETTINGS.DECIMAL_PLACES;
 
 /**
  * Builds the CSV text for a run.

@@ -1,3 +1,4 @@
+import { CHART_VIEW_PANEL_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * ChartViewPanel.ts
  *
@@ -22,7 +23,7 @@ export class ChartViewPanel extends RadioactivityAndStatisticsPanel {
     const strings = StringManager.getInstance().getChartViewStrings();
 
     const title = new Text(strings.titleStringProperty, {
-      font: new PhetFont({ size: 15, weight: "bold" }),
+      font: new PhetFont({ size: CHART_VIEW_PANEL_SETTINGS.TITLE_FONT_SIZE, weight: "bold" }),
       fill: RadioactivityAndStatisticsColors.textColorProperty,
     });
 
@@ -33,24 +34,24 @@ export class ChartViewPanel extends RadioactivityAndStatisticsPanel {
           value: ChartViewType.HISTOGRAM,
           createNode: () =>
             new Text(strings.histogramStringProperty, {
-              font: new PhetFont(13),
+              font: new PhetFont(CHART_VIEW_PANEL_SETTINGS.RADIO_GROUP_FONT_SIZE),
               fill: RadioactivityAndStatisticsColors.textColorProperty,
-              maxWidth: 170,
+              maxWidth: CHART_VIEW_PANEL_SETTINGS.RADIO_GROUP_MAX_WIDTH,
             }),
         },
         {
           value: ChartViewType.COUNT_RATE,
           createNode: () =>
             new Text(strings.countRateStringProperty, {
-              font: new PhetFont(13),
+              font: new PhetFont(CHART_VIEW_PANEL_SETTINGS.RADIO_GROUP_FONT_SIZE),
               fill: RadioactivityAndStatisticsColors.textColorProperty,
-              maxWidth: 170,
+              maxWidth: CHART_VIEW_PANEL_SETTINGS.RADIO_GROUP_MAX_WIDTH,
             }),
         },
       ],
       {
-        spacing: 6,
-        radioButtonOptions: { radius: 7 },
+        spacing: CHART_VIEW_PANEL_SETTINGS.RADIO_GROUP_SPACING,
+        radioButtonOptions: { radius: CHART_VIEW_PANEL_SETTINGS.RADIO_GROUP_RADIUS },
         accessibleName: a11y.chartViewRadioGroupStringProperty,
       },
     );
@@ -58,7 +59,7 @@ export class ChartViewPanel extends RadioactivityAndStatisticsPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 8,
+        spacing: CHART_VIEW_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
         preferredWidth: CONTROL_PANEL_WIDTH - 24,
         stretch: true,
         children: [title, radioGroup],

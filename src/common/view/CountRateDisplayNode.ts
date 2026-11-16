@@ -1,3 +1,4 @@
+import { COUNT_RATE_DISPLAY_NODE_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * CountRateDisplayNode.ts
  *
@@ -37,33 +38,33 @@ export class CountRateDisplayNode extends VBox {
     );
 
     const caption = new Text(readoutStrings.countRateStringProperty, {
-      font: new PhetFont(14),
+      font: new PhetFont(COUNT_RATE_DISPLAY_NODE_SETTINGS.CAPTION_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
     });
 
     const value = new Text(rateValueProperty, {
-      font: new PhetFont({ size: 52, weight: "bold" }),
+      font: new PhetFont({ size: COUNT_RATE_DISPLAY_NODE_SETTINGS.VALUE_FONT_SIZE, weight: "bold" }),
       fill: RadioactivityAndStatisticsColors.textColorProperty,
     });
 
     const units = new Text(readoutStrings.countsPerSecondStringProperty, {
-      font: new PhetFont(16),
+      font: new PhetFont(COUNT_RATE_DISPLAY_NODE_SETTINGS.UNITS_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
     });
 
     const intervalCaption = new Text(readoutStrings.thisIntervalStringProperty, {
-      font: new PhetFont(12),
+      font: new PhetFont(COUNT_RATE_DISPLAY_NODE_SETTINGS.INTERVAL_CAPTION_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
     });
 
     const intervalValue = new Text(intervalValueProperty, {
-      font: new PhetFont({ size: 16, weight: "bold" }),
+      font: new PhetFont({ size: COUNT_RATE_DISPLAY_NODE_SETTINGS.INTERVAL_VALUE_FONT_SIZE, weight: "bold" }),
       fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
     });
 
     super({
       align: "center",
-      spacing: 2,
+      spacing: COUNT_RATE_DISPLAY_NODE_SETTINGS.CONSTRUCTOR_SPACING,
       children: [caption, value, units, intervalCaption, intervalValue],
     });
 

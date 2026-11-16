@@ -1,3 +1,4 @@
+import { GEIGER_COUNT_SOURCE_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * GeigerCountSource.ts
  *
@@ -50,7 +51,7 @@ export type GeigerDeviceControls = {
  * counting interval, slow enough to sit well inside a BLE connection interval
  * (the tighter of the two wires).
  */
-const DEFAULT_POLL_INTERVAL_MS = 100;
+const DEFAULT_POLL_INTERVAL_MS: number = GEIGER_COUNT_SOURCE_SETTINGS.DEFAULT_POLL_INTERVAL_MS;
 
 /**
  * `?pollIntervalMs=N` overrides the polling period, so the CountRate register's
@@ -61,7 +62,7 @@ const POLL_INTERVAL_MS =
   typeof window === "undefined" ? DEFAULT_POLL_INTERVAL_MS : radioactivityAndStatisticsQueryParameters.pollIntervalMs;
 
 /** Consecutive failed reads tolerated before the connection is declared bad. */
-const MAXIMUM_CONSECUTIVE_FAILURES = 10;
+const MAXIMUM_CONSECUTIVE_FAILURES: number = GEIGER_COUNT_SOURCE_SETTINGS.MAXIMUM_CONSECUTIVE_FAILURES;
 
 export class GeigerCountSource implements TCountSource {
   public readonly sourceType: CountSourceTypeValue = CountSourceType.GEIGER_COUNTER;

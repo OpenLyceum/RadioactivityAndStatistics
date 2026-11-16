@@ -1,3 +1,4 @@
+import { STATISTICS_PANEL_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * StatisticsPanel.ts
  *
@@ -25,7 +26,7 @@ import type { RadioactivityModel } from "../model/RadioactivityModel.js";
 import { RadioactivityAndStatisticsPanel } from "../RadioactivityAndStatisticsPanel.js";
 
 /** Decimal places for statistics; counting data rarely justifies more. */
-const STATISTIC_DECIMALS = 2;
+const STATISTIC_DECIMALS: number = STATISTICS_PANEL_SETTINGS.STATISTIC_DECIMALS;
 
 /** Usable width inside the panel, once its margins are taken out. */
 const CONTENT_WIDTH = CONTROL_PANEL_WIDTH - 24;
@@ -61,13 +62,13 @@ export class StatisticsPanel extends RadioactivityAndStatisticsPanel {
       emphasized = false,
     ): void => {
       const label = new Text(labelProperty, {
-        font: new PhetFont(13),
+        font: new PhetFont(STATISTICS_PANEL_SETTINGS.LABEL_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
-        maxWidth: CONTENT_WIDTH * 0.62,
+        maxWidth: CONTENT_WIDTH * STATISTICS_PANEL_SETTINGS.LABEL_MAX_WIDTH_FACTOR,
         layoutOptions: { column: 0, row: rowIndex, xAlign: "left" },
       });
       const value = new Text(textProperty, {
-        font: new PhetFont({ size: 14, weight: emphasized ? "bold" : "normal" }),
+        font: new PhetFont({ size: STATISTICS_PANEL_SETTINGS.VALUE_FONT_SIZE, weight: emphasized ? "bold" : "normal" }),
         fill: RadioactivityAndStatisticsColors.textColorProperty,
         layoutOptions: { column: 1, row: rowIndex, xAlign: "right" },
       });
@@ -115,7 +116,7 @@ export class StatisticsPanel extends RadioactivityAndStatisticsPanel {
     addRow(strings.reducedChiSquareStringProperty, reducedChiSquareProperty);
 
     const title = new Text(strings.titleStringProperty, {
-      font: new PhetFont({ size: 15, weight: "bold" }),
+      font: new PhetFont({ size: STATISTICS_PANEL_SETTINGS.TITLE_FONT_SIZE, weight: "bold" }),
       fill: RadioactivityAndStatisticsColors.textColorProperty,
     });
 
@@ -129,8 +130,8 @@ export class StatisticsPanel extends RadioactivityAndStatisticsPanel {
     // width, so the left-aligned labels and right-aligned values pin to the
     // panel edges and every statistic reads down a single decimal column.
     const grid = new GridBox({
-      xSpacing: 12,
-      ySpacing: 5,
+      xSpacing: STATISTICS_PANEL_SETTINGS.GRID_X_SPACING,
+      ySpacing: STATISTICS_PANEL_SETTINGS.GRID_Y_SPACING,
       children: rows,
       preferredWidth: CONTENT_WIDTH,
       stretch: true,
@@ -139,7 +140,7 @@ export class StatisticsPanel extends RadioactivityAndStatisticsPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 6,
+        spacing: STATISTICS_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
         preferredWidth: CONTENT_WIDTH,
         stretch: true,
         children: [title, rule, grid],

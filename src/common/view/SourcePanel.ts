@@ -1,3 +1,4 @@
+import { SOURCE_PANEL_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * SourcePanel.ts
  *
@@ -34,7 +35,7 @@ import { RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS } from "../Radioact
 import { RadioactivityAndStatisticsPanel } from "../RadioactivityAndStatisticsPanel.js";
 
 /** Radius of the connection-status dot. */
-const STATUS_DOT_RADIUS = 5;
+const STATUS_DOT_RADIUS: number = SOURCE_PANEL_SETTINGS.STATUS_DOT_RADIUS;
 
 export class SourcePanel extends RadioactivityAndStatisticsPanel {
   private readonly disposeSourcePanel: () => void;
@@ -50,7 +51,7 @@ export class SourcePanel extends RadioactivityAndStatisticsPanel {
     const disposables: { dispose: () => void }[] = [];
 
     const title = new Text(strings.titleStringProperty, {
-      font: new PhetFont({ size: 15, weight: "bold" }),
+      font: new PhetFont({ size: SOURCE_PANEL_SETTINGS.TITLE_FONT_SIZE, weight: "bold" }),
       fill: RadioactivityAndStatisticsColors.textColorProperty,
     });
 
@@ -62,7 +63,7 @@ export class SourcePanel extends RadioactivityAndStatisticsPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 8,
+        spacing: SOURCE_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
         preferredWidth: CONTROL_PANEL_WIDTH - 24,
         stretch: true,
         children: [title, sourceControls],
@@ -112,22 +113,22 @@ function createSimulatedControls(
       ...RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
       delta: 1,
       titleNodeOptions: {
-        font: new PhetFont(13),
+        font: new PhetFont(SOURCE_PANEL_SETTINGS.ACTIVITY_CONTROL_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.textColorProperty,
-        maxWidth: CONTROL_PANEL_WIDTH - 40,
+        maxWidth: CONTROL_PANEL_WIDTH - SOURCE_PANEL_SETTINGS.ACTIVITY_CONTROL_MAX_WIDTH_OFFSET,
       },
       numberDisplayOptions: {
         valuePattern: "{{value}} /s",
-        textOptions: { font: new PhetFont(13) },
+        textOptions: { font: new PhetFont(SOURCE_PANEL_SETTINGS.ACTIVITY_CONTROL_FONT_SIZE) },
       },
       accessibleName: a11y.activitySliderStringProperty,
     },
   );
 
   const speedLabelText = new Text(strings.speedLabelStringProperty, {
-    font: new PhetFont(13),
+    font: new PhetFont(SOURCE_PANEL_SETTINGS.SPEED_LABEL_TEXT_FONT_SIZE),
     fill: RadioactivityAndStatisticsColors.textColorProperty,
-    maxWidth: CONTROL_PANEL_WIDTH - 40,
+    maxWidth: CONTROL_PANEL_WIDTH - SOURCE_PANEL_SETTINGS.SPEED_LABEL_TEXT_MAX_WIDTH_OFFSET,
   });
 
   const speedRadioGroup = new AquaRadioButtonGroup(
@@ -136,21 +137,21 @@ function createSimulatedControls(
       value: multiplier,
       createNode: () =>
         new Text(speedLabelStringProperty(multiplier, strings), {
-          font: new PhetFont(13),
+          font: new PhetFont(SOURCE_PANEL_SETTINGS.SPEED_RADIO_GROUP_FONT_SIZE),
           fill: RadioactivityAndStatisticsColors.textColorProperty,
         }),
     })),
     {
       orientation: "horizontal",
-      spacing: 10,
-      radioButtonOptions: { radius: 7 },
+      spacing: SOURCE_PANEL_SETTINGS.SPEED_RADIO_GROUP_SPACING,
+      radioButtonOptions: { radius: SOURCE_PANEL_SETTINGS.SPEED_RADIO_GROUP_RADIUS },
       accessibleName: a11y.speedRadioGroupStringProperty,
     },
   );
 
   return new VBox({
     align: "left",
-    spacing: 6,
+    spacing: SOURCE_PANEL_SETTINGS.CREATE_SIMULATED_CONTROLS_SPACING,
     children: [activityControl, speedLabelText, speedRadioGroup],
   });
 }
@@ -201,13 +202,13 @@ function createGeigerControls(
   });
 
   const statusRow = new HBox({
-    spacing: 6,
+    spacing: SOURCE_PANEL_SETTINGS.STATUS_ROW_SPACING,
     children: [
       new Circle(STATUS_DOT_RADIUS, { fill: statusColorProperty }),
       new Text(statusTextProperty, {
-        font: new PhetFont(13),
+        font: new PhetFont(SOURCE_PANEL_SETTINGS.STATUS_ROW_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.textColorProperty,
-        maxWidth: CONTROL_PANEL_WIDTH - 60,
+        maxWidth: CONTROL_PANEL_WIDTH - SOURCE_PANEL_SETTINGS.STATUS_ROW_MAX_WIDTH_OFFSET,
       }),
     ],
   });
@@ -225,9 +226,9 @@ function createGeigerControls(
     },
   );
   const deviceNameText = new Text(deviceNameProperty, {
-    font: new PhetFont(11),
+    font: new PhetFont(SOURCE_PANEL_SETTINGS.DEVICE_NAME_TEXT_FONT_SIZE),
     fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
-    maxWidth: CONTROL_PANEL_WIDTH - 30,
+    maxWidth: CONTROL_PANEL_WIDTH - SOURCE_PANEL_SETTINGS.DEVICE_NAME_TEXT_MAX_WIDTH_OFFSET,
     visibleProperty: new DerivedProperty([deviceNameProperty], (name) => name.length > 0),
   });
 
@@ -252,7 +253,10 @@ function createGeigerControls(
 
   const disconnectButton = new RectangularPushButton({
     ...FLAT_PANEL_PUSH_BUTTON_OPTIONS,
-    content: new Text(strings.disconnectStringProperty, { font: new PhetFont(13), fill: LIGHT_SURFACE_TEXT_FILL }),
+    content: new Text(strings.disconnectStringProperty, {
+      font: new PhetFont(SOURCE_PANEL_SETTINGS.DISCONNECT_BUTTON_FONT_SIZE),
+      fill: LIGHT_SURFACE_TEXT_FILL,
+    }),
     listener: () => {
       geigerSource.disconnect().catch(() => undefined);
     },
@@ -268,17 +272,17 @@ function createGeigerControls(
       ? strings.insecureContextStringProperty
       : strings.unsupportedBrowserStringProperty;
   const unavailableText = new Text(unavailableMessage, {
-    font: new PhetFont(11),
+    font: new PhetFont(SOURCE_PANEL_SETTINGS.UNAVAILABLE_TEXT_FONT_SIZE),
     fill: RadioactivityAndStatisticsColors.statusCriticalColorProperty,
-    maxWidth: CONTROL_PANEL_WIDTH - 30,
+    maxWidth: CONTROL_PANEL_WIDTH - SOURCE_PANEL_SETTINGS.UNAVAILABLE_TEXT_MAX_WIDTH_OFFSET,
     visible: connectButtons.length === 0,
   });
 
   const errorTextProperty = new DerivedProperty([geigerSource.errorMessageProperty], (message) => message ?? "");
   const errorText = new Text(errorTextProperty, {
-    font: new PhetFont(11),
+    font: new PhetFont(SOURCE_PANEL_SETTINGS.ERROR_TEXT_FONT_SIZE),
     fill: RadioactivityAndStatisticsColors.statusCriticalColorProperty,
-    maxWidth: CONTROL_PANEL_WIDTH - 30,
+    maxWidth: CONTROL_PANEL_WIDTH - SOURCE_PANEL_SETTINGS.ERROR_TEXT_MAX_WIDTH_OFFSET,
     visibleProperty: new DerivedProperty([errorTextProperty], (message) => message.length > 0),
   });
 
@@ -296,15 +300,15 @@ function createGeigerControls(
 
   const diagnostics = new VBox({
     align: "left",
-    spacing: 4,
+    spacing: SOURCE_PANEL_SETTINGS.DIAGNOSTICS_SPACING,
     visibleProperty: showDiagnosticsProperty,
     children: [
       new Text(registerValueProperty, {
-        font: new PhetFont(11),
+        font: new PhetFont(SOURCE_PANEL_SETTINGS.DIAGNOSTICS_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
       }),
       new Text(tubeVoltageValueProperty, {
-        font: new PhetFont(11),
+        font: new PhetFont(SOURCE_PANEL_SETTINGS.DIAGNOSTICS_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
       }),
     ],
@@ -323,7 +327,7 @@ function createGeigerControls(
 
   return new VBox({
     align: "left",
-    spacing: 6,
+    spacing: SOURCE_PANEL_SETTINGS.CREATE_GEIGER_CONTROLS_SPACING,
     children: [statusRow, deviceNameText, ...connectButtons, disconnectButton, unavailableText, errorText, diagnostics],
   });
 }
@@ -347,7 +351,7 @@ function createConnectButton(
   return new RectangularPushButton({
     ...FLAT_PANEL_PUSH_BUTTON_OPTIONS,
     content: new Text(isUsb ? strings.connectUsbStringProperty : strings.connectBluetoothStringProperty, {
-      font: new PhetFont(13),
+      font: new PhetFont(SOURCE_PANEL_SETTINGS.CREATE_CONNECT_BUTTON_FONT_SIZE),
       fill: LIGHT_SURFACE_TEXT_FILL,
     }),
     listener: () => {

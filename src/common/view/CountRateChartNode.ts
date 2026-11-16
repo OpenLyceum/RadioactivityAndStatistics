@@ -1,3 +1,4 @@
+import { COUNT_RATE_CHART_NODE_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * CountRateChartNode.ts
  *
@@ -36,14 +37,14 @@ import type { RadioactivityModel } from "../model/RadioactivityModel.js";
 import { chooseTickSpacing } from "./chartTicks.js";
 
 /** Headroom above the highest plotted rate. */
-const Y_HEADROOM = 1.2;
+const Y_HEADROOM: number = COUNT_RATE_CHART_NODE_SETTINGS.Y_HEADROOM;
 
 /** Axis ranges used before any data has been collected. */
-const DEFAULT_X_RANGE = new Range(0, 20);
-const DEFAULT_Y_RANGE = new Range(0, 30);
+const DEFAULT_X_RANGE = new Range(0, COUNT_RATE_CHART_NODE_SETTINGS.DEFAULT_X_RANGE_MAX);
+const DEFAULT_Y_RANGE = new Range(0, COUNT_RATE_CHART_NODE_SETTINGS.DEFAULT_Y_RANGE_MAX);
 
 /** Roughly how many ticks to aim for on each axis. */
-const TARGET_TICK_COUNT = 6;
+const TARGET_TICK_COUNT: number = COUNT_RATE_CHART_NODE_SETTINGS.TARGET_TICK_COUNT;
 
 /** Dash pattern of the mean reference line. */
 const MEAN_LINE_DASH = [6, 4];
@@ -56,7 +57,7 @@ const MEAN_LINE_DASH = [6, 4];
  * more every frame than the frame before it, with nothing on screen to show for
  * it, and that growth is what eventually locks the sim up.
  */
-const MAXIMUM_PLOTTED_POINTS = 1000;
+const MAXIMUM_PLOTTED_POINTS: number = COUNT_RATE_CHART_NODE_SETTINGS.MAXIMUM_PLOTTED_POINTS;
 
 export class CountRateChartNode extends VBox {
   private readonly chartTransform: ChartTransform;
@@ -113,7 +114,7 @@ export class CountRateChartNode extends VBox {
     // trace alone reads as one continuous signal rather than N discrete samples.
     const pointPlot = new ScatterPlot(chartTransform, [], {
       fill: RadioactivityAndStatisticsColors.countRateTraceColorProperty,
-      radius: 2.5,
+      radius: COUNT_RATE_CHART_NODE_SETTINGS.POINT_PLOT_RADIUS,
     });
 
     const plotArea = new Node({
@@ -129,7 +130,7 @@ export class CountRateChartNode extends VBox {
       edge: "min" as const,
       createLabel: (value: number) =>
         new Text(formatTick(value), {
-          font: new PhetFont(11),
+          font: new PhetFont(COUNT_RATE_CHART_NODE_SETTINGS.TICK_LABEL_OPTIONS_FONT_SIZE),
           fill: RadioactivityAndStatisticsColors.chartAxisColorProperty,
         }),
     };
@@ -149,14 +150,14 @@ export class CountRateChartNode extends VBox {
     });
 
     const axisTitleOptions = {
-      font: new PhetFont(12),
+      font: new PhetFont(COUNT_RATE_CHART_NODE_SETTINGS.AXIS_TITLE_OPTIONS_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
     };
     const yAxisTitle = new Text(strings.axisRateStringProperty, { ...axisTitleOptions, rotation: -Math.PI / 2 });
     const xAxisTitle = new Text(strings.axisTimeStringProperty, axisTitleOptions);
 
     const legend = new HBox({
-      spacing: 14,
+      spacing: COUNT_RATE_CHART_NODE_SETTINGS.LEGEND_SPACING,
       children: [
         legendEntry(strings.axisRateStringProperty, RadioactivityAndStatisticsColors.countRateTraceColorProperty, []),
         legendEntry(
@@ -169,12 +170,15 @@ export class CountRateChartNode extends VBox {
 
     super({
       align: "center",
-      spacing: 8,
+      spacing: COUNT_RATE_CHART_NODE_SETTINGS.CONSTRUCTOR_SPACING,
       children: [
         new HBox({
-          spacing: 4,
+          spacing: COUNT_RATE_CHART_NODE_SETTINGS.ITEM_1_SPACING,
           align: "center",
-          children: [yAxisTitle, new VBox({ spacing: 24, children: [chart, xAxisTitle] })],
+          children: [
+            yAxisTitle,
+            new VBox({ spacing: COUNT_RATE_CHART_NODE_SETTINGS.ITEM_2_SPACING, children: [chart, xAxisTitle] }),
+          ],
         }),
         legend,
       ],
@@ -274,13 +278,17 @@ function legendEntry(
   lineDash: number[],
 ): Node {
   return new HBox({
-    spacing: 5,
+    spacing: COUNT_RATE_CHART_NODE_SETTINGS.LEGEND_ENTRY_SPACING,
     children: [
-      new Line(0, 0, 22, 0, { stroke: colorProperty, lineWidth: CURVE_LINE_WIDTH, lineDash }),
+      new Line(0, 0, COUNT_RATE_CHART_NODE_SETTINGS.LEGEND_ENTRY_END_X, 0, {
+        stroke: colorProperty,
+        lineWidth: CURVE_LINE_WIDTH,
+        lineDash,
+      }),
       new Text(labelProperty, {
-        font: new PhetFont(11),
+        font: new PhetFont(COUNT_RATE_CHART_NODE_SETTINGS.LEGEND_ENTRY_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
-        maxWidth: 150,
+        maxWidth: COUNT_RATE_CHART_NODE_SETTINGS.LEGEND_ENTRY_MAX_WIDTH,
       }),
     ],
   });

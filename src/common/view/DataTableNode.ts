@@ -1,3 +1,4 @@
+import { DATA_TABLE_NODE_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * DataTableNode.ts
  *
@@ -47,7 +48,7 @@ export class DataTableNode extends RadioactivityAndStatisticsPanel {
     const strings = StringManager.getInstance().getTableStrings();
 
     const title = new Text(strings.titleStringProperty, {
-      font: new PhetFont({ size: 15, weight: "bold" }),
+      font: new PhetFont({ size: DATA_TABLE_NODE_SETTINGS.TITLE_FONT_SIZE, weight: "bold" }),
       fill: RadioactivityAndStatisticsColors.textColorProperty,
     });
 
@@ -62,9 +63,9 @@ export class DataTableNode extends RadioactivityAndStatisticsPanel {
       children: headerProperties.map(
         (property, column) =>
           new Text(property, {
-            font: new PhetFont({ size: 11, weight: "bold" }),
+            font: new PhetFont({ size: DATA_TABLE_NODE_SETTINGS.HEADER_FONT_SIZE, weight: "bold" }),
             fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
-            maxWidth: TABLE_WIDTH * 0.28,
+            maxWidth: TABLE_WIDTH * DATA_TABLE_NODE_SETTINGS.HEADER_MAX_WIDTH_FACTOR,
             ...positionFor(column),
           }),
       ),
@@ -89,9 +90,9 @@ export class DataTableNode extends RadioactivityAndStatisticsPanel {
       const cells = COLUMN_FRACTIONS.map(
         (_, column) =>
           new Text("", {
-            font: new PhetFont(11),
+            font: new PhetFont(DATA_TABLE_NODE_SETTINGS.CELLS_FONT_SIZE),
             fill: RadioactivityAndStatisticsColors.textColorProperty,
-            maxWidth: TABLE_WIDTH * 0.28,
+            maxWidth: TABLE_WIDTH * DATA_TABLE_NODE_SETTINGS.CELLS_MAX_WIDTH_FACTOR,
             ...positionFor(column, y + TABLE_ROW_HEIGHT / 2),
           }),
       );
@@ -103,7 +104,7 @@ export class DataTableNode extends RadioactivityAndStatisticsPanel {
     const body = new Node({ children: bodyChildren });
 
     const emptyMessage = new Text(strings.emptyStringProperty, {
-      font: new PhetFont(12),
+      font: new PhetFont(DATA_TABLE_NODE_SETTINGS.EMPTY_MESSAGE_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
       maxWidth: TABLE_WIDTH,
       centerY: (TABLE_VISIBLE_ROWS * TABLE_ROW_HEIGHT) / 2,
@@ -113,10 +114,10 @@ export class DataTableNode extends RadioactivityAndStatisticsPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 4,
+        spacing: DATA_TABLE_NODE_SETTINGS.CONSTRUCTOR_SPACING,
         children: [title, header, headerRule, new Node({ children: [body, emptyMessage] })],
       }),
-      { minWidth: TABLE_WIDTH + 24 },
+      { minWidth: TABLE_WIDTH + DATA_TABLE_NODE_SETTINGS.CONSTRUCTOR_MIN_WIDTH_OFFSET },
     );
 
     this.rows = rows;

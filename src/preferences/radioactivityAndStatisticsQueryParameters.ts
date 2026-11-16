@@ -1,3 +1,4 @@
+import { RADIOACTIVITY_AND_STATISTICS_QUERY_PARAMETERS_SETTINGS } from "../RadioactivityAndStatisticsConstants.js";
 /**
  * radioactivityAndStatisticsQueryParameters.ts
  *
@@ -107,7 +108,8 @@ const radioactivityAndStatisticsQueryParameters = QueryStringMachine.getAll({
    */
   pollIntervalMs: {
     type: "number" as const,
-    defaultValue: 100,
+    defaultValue:
+      RADIOACTIVITY_AND_STATISTICS_QUERY_PARAMETERS_SETTINGS.RADIOACTIVITY_AND_STATISTICS_QUERY_PARAMETERS_DEFAULT_VALUE,
     isValidValue: (value: number) => Number.isFinite(value) && value > 0,
   },
 });

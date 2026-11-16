@@ -1,3 +1,4 @@
+import { SIMULATED_COUNT_SOURCE_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * SimulatedCountSource.ts
  *
@@ -22,7 +23,7 @@ import { CountSourceType, type CountSourceTypeValue, type TCountSource } from ".
  * (the relative error of the normal approximation is below a part in a thousand
  * by λ = 30).
  */
-const KNUTH_ALGORITHM_LIMIT = 30;
+const KNUTH_ALGORITHM_LIMIT: number = SIMULATED_COUNT_SOURCE_SETTINGS.KNUTH_ALGORITHM_LIMIT;
 
 /**
  * Draws from a Poisson distribution with the given mean.

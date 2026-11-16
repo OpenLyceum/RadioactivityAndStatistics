@@ -1,3 +1,4 @@
+import { HISTOGRAM_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * Histogram.ts
  *
@@ -42,7 +43,7 @@ export const EMPTY_HISTOGRAM: Histogram = {
 };
 
 /** Upper bound on bin count, so a wild data set cannot allocate a huge array. */
-const MAXIMUM_BIN_COUNT = 200;
+const MAXIMUM_BIN_COUNT: number = HISTOGRAM_SETTINGS.MAXIMUM_BIN_COUNT;
 
 /**
  * Fewest bins the automatic rule will settle for.
@@ -53,10 +54,10 @@ const MAXIMUM_BIN_COUNT = 200;
  * to let a shape be recognised and compared with a curve, the width is narrowed
  * until there are at least this many bins.
  */
-const MINIMUM_TARGET_BINS = 8;
+const MINIMUM_TARGET_BINS: number = HISTOGRAM_SETTINGS.MINIMUM_TARGET_BINS;
 
 /** Most bins the automatic rule will produce, so a long run stays readable. */
-const MAXIMUM_TARGET_BINS = 30;
+const MAXIMUM_TARGET_BINS: number = HISTOGRAM_SETTINGS.MAXIMUM_TARGET_BINS;
 
 /**
  * A running tally of how many measurements produced each integer count.
@@ -134,7 +135,7 @@ export class CountTally {
  * simply gets as many bins as it has distinct values.
  */
 export function chooseBinWidthOf(tally: CountTally): number {
-  if (tally.totalSamples < 4) {
+  if (tally.totalSamples < HISTOGRAM_SETTINGS.MIN_QUARTILE_SAMPLES) {
     return 1;
   }
 
@@ -275,7 +276,7 @@ export function gaussianCurve(
   histogram: Histogram,
   mean: number,
   standardDeviation: number,
-  pointCount = 120,
+  pointCount: number = HISTOGRAM_SETTINGS.DEFAULT_POINT_COUNT,
 ): { x: number; y: number }[] {
   if (histogram.binCounts.length === 0 || standardDeviation <= 0) {
     return [];

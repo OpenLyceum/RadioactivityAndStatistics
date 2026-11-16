@@ -1,3 +1,4 @@
+import { RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS } from "../RadioactivityAndStatisticsConstants.js";
 /**
  * RadioactivityAndStatisticsPreferencesNode.ts
  *
@@ -25,26 +26,29 @@ export class RadioactivityAndStatisticsPreferencesNode extends VBox {
     // colors (readable on white in both default and projector profiles), not textColorProperty
     // (which is near-white in default mode and would be invisible on the white dialog).
     const header = new Text(prefStrings.titleStringProperty, {
-      font: new PhetFont({ size: 18, weight: "bold" }),
+      font: new PhetFont({
+        size: RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.HEADER_FONT_SIZE,
+        weight: "bold",
+      }),
       fill: RadioactivityAndStatisticsColors.controlSurfaceTextColorProperty,
     });
 
     const labelOptions = {
-      font: new PhetFont(14),
+      font: new PhetFont(RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.LABEL_OPTIONS_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.controlSurfaceTextColorProperty,
-      maxWidth: 420,
+      maxWidth: RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.LABEL_OPTIONS_MAX_WIDTH,
     };
 
     const descriptionOptions = {
-      font: new PhetFont(12),
+      font: new PhetFont(RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.DESCRIPTION_OPTIONS_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.controlSurfaceTextColorProperty,
-      maxWidth: 460,
+      maxWidth: RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.DESCRIPTION_OPTIONS_MAX_WIDTH,
     };
 
     const checkboxOptions = {
       checkboxColor: RadioactivityAndStatisticsColors.controlSurfaceTextColorProperty,
       checkboxColorBackground: RadioactivityAndStatisticsColors.controlSurfaceColorProperty,
-      spacing: 8,
+      spacing: RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.CHECKBOX_OPTIONS_SPACING,
     };
 
     const showDiagnosticsCheckbox = new Checkbox(
@@ -79,18 +83,18 @@ export class RadioactivityAndStatisticsPreferencesNode extends VBox {
         delta: TUBE_VOLTAGE_CONTROL_RANGE.step,
         layoutFunction: NumberControl.createLayoutFunction1({
           arrowButtonsXSpacing: 8,
-          ySpacing: 6,
+          ySpacing: RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.TUBE_VOLTAGE_CONTROL_Y_SPACING,
         }),
         titleNodeOptions: {
-          font: new PhetFont(14),
+          font: new PhetFont(RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.TUBE_VOLTAGE_CONTROL_FONT_SIZE),
           fill: RadioactivityAndStatisticsColors.controlSurfaceTextColorProperty,
-          maxWidth: 280,
+          maxWidth: RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.TUBE_VOLTAGE_CONTROL_MAX_WIDTH,
         },
         numberDisplayOptions: {
           valuePattern: "{{value}} V",
           decimalPlaces: 0,
           textOptions: {
-            font: new PhetFont(14),
+            font: new PhetFont(RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.TUBE_VOLTAGE_CONTROL_FONT_SIZE),
             fill: RadioactivityAndStatisticsColors.controlSurfaceTextColorProperty,
           },
         },
@@ -120,7 +124,7 @@ export class RadioactivityAndStatisticsPreferencesNode extends VBox {
 
     super({
       align: "left",
-      spacing: 12,
+      spacing: RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS.CONSTRUCTOR_SPACING,
       children: [
         header,
         showDiagnosticsCheckbox,

@@ -1,3 +1,4 @@
+import { GAUSSIAN_FIT_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * GaussianFit.ts
  *
@@ -42,19 +43,19 @@ export type GaussianFitResult = {
 };
 
 /** Maximum Levenberg–Marquardt iterations before giving up. */
-const MAXIMUM_ITERATIONS = 100;
+const MAXIMUM_ITERATIONS: number = GAUSSIAN_FIT_SETTINGS.MAXIMUM_ITERATIONS;
 
 /** Relative change in χ² below which the fit is considered converged. */
-const CONVERGENCE_TOLERANCE = 1e-8;
+const CONVERGENCE_TOLERANCE: number = GAUSSIAN_FIT_SETTINGS.CONVERGENCE_TOLERANCE;
 
 /** Minimum number of bins needed to constrain three parameters. */
-const MINIMUM_BINS = 4;
+const MINIMUM_BINS: number = GAUSSIAN_FIT_SETTINGS.MINIMUM_BINS;
 
 /** Damping above which the iteration is abandoned as stuck. */
-const MAXIMUM_DAMPING = 1e12;
+const MAXIMUM_DAMPING: number = GAUSSIAN_FIT_SETTINGS.MAXIMUM_DAMPING;
 
 /** Determinant magnitude below which the normal equations are called singular. */
-const SINGULAR_THRESHOLD = 1e-14;
+const SINGULAR_THRESHOLD: number = GAUSSIAN_FIT_SETTINGS.SINGULAR_THRESHOLD;
 
 /** The three fitted parameters, in the order the solver works with them. */
 type Parameters3 = readonly [amplitude: number, mean: number, standardDeviation: number];
@@ -98,7 +99,7 @@ export function fitGaussian(binCenters: readonly number[], binCounts: readonly n
 
   let parameters = initial;
   let chiSquare = computeChiSquare(binCenters, binCounts, pointCount, parameters);
-  let damping = 1e-3;
+  let damping: number = GAUSSIAN_FIT_SETTINGS.INITIAL_DAMPING;
   let converged = false;
   let iterations = 0;
 
@@ -111,7 +112,7 @@ export function fitGaussian(binCenters: readonly number[], binCounts: readonly n
     if (!candidate) {
       // Either the normal equations were singular or the step left the model
       // undefined; more damping shortens the step towards gradient descent.
-      damping *= 10;
+      damping *= GAUSSIAN_FIT_SETTINGS.DAMPING_INCREASE_FACTOR;
       if (damping > MAXIMUM_DAMPING) {
         break;
       }
@@ -120,7 +121,7 @@ export function fitGaussian(binCenters: readonly number[], binCounts: readonly n
 
     const candidateChiSquare = computeChiSquare(binCenters, binCounts, pointCount, candidate);
     if (candidateChiSquare >= chiSquare) {
-      damping *= 10;
+      damping *= GAUSSIAN_FIT_SETTINGS.DAMPING_INCREASE_FACTOR;
       if (damping > MAXIMUM_DAMPING) {
         break;
       }
@@ -130,7 +131,7 @@ export function fitGaussian(binCenters: readonly number[], binCounts: readonly n
     const improvement = (chiSquare - candidateChiSquare) / Math.max(chiSquare, Number.EPSILON);
     parameters = candidate;
     chiSquare = candidateChiSquare;
-    damping = Math.max(damping / 10, 1e-12);
+    damping = Math.max(damping / GAUSSIAN_FIT_SETTINGS.DAMPING_REDUCTION_FACTOR, GAUSSIAN_FIT_SETTINGS.MIN_DAMPING);
 
     if (improvement < CONVERGENCE_TOLERANCE) {
       converged = true;

@@ -1,3 +1,4 @@
+import { RADIOACTIVITY_AND_STATISTICS_PANEL_SETTINGS } from "../RadioactivityAndStatisticsConstants.js";
 /**
  * RadioactivityAndStatisticsPanel.ts
  *
@@ -40,8 +41,8 @@ export class RadioactivityAndStatisticsPanel extends Panel {
         fill: RadioactivityAndStatisticsColors.panelBackgroundColorProperty,
         stroke: RadioactivityAndStatisticsColors.panelBorderColorProperty,
         cornerRadius: PANEL_CORNER_RADIUS,
-        xMargin: 12,
-        yMargin: 10,
+        xMargin: RADIOACTIVITY_AND_STATISTICS_PANEL_SETTINGS.OPTIONS_X_MARGIN,
+        yMargin: RADIOACTIVITY_AND_STATISTICS_PANEL_SETTINGS.OPTIONS_Y_MARGIN,
       },
       providedOptions,
     );

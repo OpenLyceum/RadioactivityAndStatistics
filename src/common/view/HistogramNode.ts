@@ -1,3 +1,4 @@
+import { HISTOGRAM_NODE_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * HistogramNode.ts
  *
@@ -44,14 +45,14 @@ import type { RadioactivityModel } from "../model/RadioactivityModel.js";
 import { chooseTickSpacing } from "./chartTicks.js";
 
 /** Fraction of headroom left above the tallest mark. */
-const Y_HEADROOM = 1.15;
+const Y_HEADROOM: number = HISTOGRAM_NODE_SETTINGS.Y_HEADROOM;
 
 /** Axis ranges used before any data has been collected. */
-const DEFAULT_X_RANGE = new Range(0, 40);
-const DEFAULT_Y_RANGE = new Range(0, 10);
+const DEFAULT_X_RANGE = new Range(0, HISTOGRAM_NODE_SETTINGS.DEFAULT_X_RANGE_MAX);
+const DEFAULT_Y_RANGE = new Range(0, HISTOGRAM_NODE_SETTINGS.DEFAULT_Y_RANGE_MAX);
 
 /** Roughly how many ticks to aim for on each axis. */
-const TARGET_TICK_COUNT = 8;
+const TARGET_TICK_COUNT: number = HISTOGRAM_NODE_SETTINGS.TARGET_TICK_COUNT;
 
 /** Visibility of each model curve, owned by the screen model. */
 export type CurveVisibility = {
@@ -138,7 +139,7 @@ export class HistogramNode extends VBox {
       edge: "min" as const,
       createLabel: (value: number) =>
         new Text(formatTick(value), {
-          font: new PhetFont(11),
+          font: new PhetFont(HISTOGRAM_NODE_SETTINGS.TICK_LABEL_OPTIONS_FONT_SIZE),
           fill: RadioactivityAndStatisticsColors.chartAxisColorProperty,
         }),
     };
@@ -158,16 +159,19 @@ export class HistogramNode extends VBox {
     });
 
     const axisTitleOptions = {
-      font: new PhetFont(12),
+      font: new PhetFont(HISTOGRAM_NODE_SETTINGS.AXIS_TITLE_OPTIONS_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
     };
     const yAxisTitle = new Text(strings.axisFrequencyStringProperty, { ...axisTitleOptions, rotation: -Math.PI / 2 });
     const xAxisTitle = new Text(strings.axisCountsStringProperty, axisTitleOptions);
 
     const plotWithAxes = new HBox({
-      spacing: 4,
+      spacing: HISTOGRAM_NODE_SETTINGS.PLOT_WITH_AXES_SPACING,
       align: "center",
-      children: [yAxisTitle, new VBox({ spacing: 24, children: [chart, xAxisTitle] })],
+      children: [
+        yAxisTitle,
+        new VBox({ spacing: HISTOGRAM_NODE_SETTINGS.PLOT_WITH_AXES_ITEM_2_SPACING, children: [chart, xAxisTitle] }),
+      ],
     });
 
     // ── Legend ────────────────────────────────────────────────────────────────
@@ -175,7 +179,7 @@ export class HistogramNode extends VBox {
     // bars plus at least one curve. Swatches reproduce each curve's dash
     // pattern so identity survives without colour.
     const legend = new HBox({
-      spacing: 14,
+      spacing: HISTOGRAM_NODE_SETTINGS.LEGEND_SPACING,
       children: [
         legendEntry(
           strings.poissonStringProperty,
@@ -200,7 +204,7 @@ export class HistogramNode extends VBox {
 
     super({
       align: "center",
-      spacing: 8,
+      spacing: HISTOGRAM_NODE_SETTINGS.CONSTRUCTOR_SPACING,
       children: [plotWithAxes, legend],
     });
 
@@ -326,7 +330,7 @@ function sampleFittedGaussian(
   amplitude: number,
   mean: number,
   standardDeviation: number,
-  pointCount = 120,
+  pointCount: number = HISTOGRAM_NODE_SETTINGS.DEFAULT_POINT_COUNT,
 ): Vector2[] {
   if (histogram.binCounts.length === 0 || standardDeviation <= 0) {
     return [];
@@ -350,22 +354,22 @@ function legendEntry(
   lineDash: number[],
   visibleProperty: TReadOnlyProperty<boolean>,
 ): Node {
-  const swatch = new Line(0, 0, 22, 0, {
+  const swatch = new Line(0, 0, HISTOGRAM_NODE_SETTINGS.SWATCH_END_X, 0, {
     stroke: colorProperty,
     lineWidth: CURVE_LINE_WIDTH,
     lineDash,
   });
   return new HBox({
-    spacing: 5,
+    spacing: HISTOGRAM_NODE_SETTINGS.LEGEND_ENTRY_SPACING,
     // Hidden rather than greyed out: a legend entry for a curve that is not
     // drawn is noise, and the checkbox that controls it is right there.
     visibleProperty,
     children: [
       swatch,
       new Text(labelProperty, {
-        font: new PhetFont(11),
+        font: new PhetFont(HISTOGRAM_NODE_SETTINGS.LEGEND_ENTRY_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
-        maxWidth: 150,
+        maxWidth: HISTOGRAM_NODE_SETTINGS.LEGEND_ENTRY_MAX_WIDTH,
       }),
     ],
   });

@@ -1,3 +1,4 @@
+import { ACQUISITION_PANEL_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * AcquisitionPanel.ts
  *
@@ -44,14 +45,14 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
     const disposables: { dispose: () => void }[] = [];
 
     const title = new Text(strings.titleStringProperty, {
-      font: new PhetFont({ size: 15, weight: "bold" }),
+      font: new PhetFont({ size: ACQUISITION_PANEL_SETTINGS.TITLE_FONT_SIZE, weight: "bold" }),
       fill: RadioactivityAndStatisticsColors.textColorProperty,
     });
 
     const titleNodeOptions = {
-      font: new PhetFont(13),
+      font: new PhetFont(ACQUISITION_PANEL_SETTINGS.TITLE_NODE_OPTIONS_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.textColorProperty,
-      maxWidth: CONTROL_PANEL_WIDTH - 40,
+      maxWidth: CONTROL_PANEL_WIDTH - ACQUISITION_PANEL_SETTINGS.TITLE_NODE_OPTIONS_MAX_WIDTH_OFFSET,
     };
 
     const intervalControl = new NumberControl(
@@ -65,7 +66,7 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
         numberDisplayOptions: {
           valuePattern: "{{value}} s",
           decimalPlaces: model.countingIntervalDecimalPlaces,
-          textOptions: { font: new PhetFont(13) },
+          textOptions: { font: new PhetFont(ACQUISITION_PANEL_SETTINGS.INTERVAL_CONTROL_FONT_SIZE) },
         },
         accessibleName: a11y.intervalControlStringProperty,
         // Changing the interval mid-run would put samples of different lengths
@@ -80,9 +81,11 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
       SAMPLES_PER_RUN_RANGE,
       {
         ...RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
-        delta: 5,
+        delta: ACQUISITION_PANEL_SETTINGS.SAMPLES_PER_RUN_CONTROL_DELTA,
         titleNodeOptions,
-        numberDisplayOptions: { textOptions: { font: new PhetFont(13) } },
+        numberDisplayOptions: {
+          textOptions: { font: new PhetFont(ACQUISITION_PANEL_SETTINGS.SAMPLES_PER_RUN_CONTROL_FONT_SIZE) },
+        },
         accessibleName: a11y.samplesPerRunControlStringProperty,
         enabledProperty: new DerivedProperty([model.isContinuousProperty], (continuous) => !continuous),
         visibleProperty: showSamplesPerRunControlProperty,
@@ -92,9 +95,9 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
     const continuousCheckbox = new Checkbox(
       model.isContinuousProperty,
       new Text(strings.continuousStringProperty, {
-        font: new PhetFont(13),
+        font: new PhetFont(ACQUISITION_PANEL_SETTINGS.CONTINUOUS_CHECKBOX_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.textColorProperty,
-        maxWidth: CONTROL_PANEL_WIDTH - 50,
+        maxWidth: CONTROL_PANEL_WIDTH - ACQUISITION_PANEL_SETTINGS.CONTINUOUS_CHECKBOX_MAX_WIDTH_OFFSET,
       }),
       {
         ...RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS,
@@ -109,7 +112,10 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
 
     const recordButton = new RectangularPushButton({
       ...FLAT_PANEL_PUSH_BUTTON_OPTIONS,
-      content: new Text(strings.recordStringProperty, { font: new PhetFont(13), fill: LIGHT_SURFACE_TEXT_FILL }),
+      content: new Text(strings.recordStringProperty, {
+        font: new PhetFont(ACQUISITION_PANEL_SETTINGS.RECORD_BUTTON_FONT_SIZE),
+        fill: LIGHT_SURFACE_TEXT_FILL,
+      }),
       listener: () => model.startRecording(),
       accessibleName: a11y.recordButtonStringProperty,
       visibleProperty: notRecordingProperty,
@@ -119,7 +125,7 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
       ...FLAT_PANEL_PUSH_BUTTON_OPTIONS,
       baseColor: RadioactivityAndStatisticsColors.statusCriticalColorProperty,
       content: new Text(strings.stopStringProperty, {
-        font: new PhetFont(13),
+        font: new PhetFont(ACQUISITION_PANEL_SETTINGS.STOP_BUTTON_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.onStatusCriticalTextColorProperty,
       }),
       listener: () => model.stopRecording(),
@@ -131,7 +137,10 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
 
     const clearButton = new RectangularPushButton({
       ...FLAT_PANEL_PUSH_BUTTON_OPTIONS,
-      content: new Text(strings.clearStringProperty, { font: new PhetFont(13), fill: LIGHT_SURFACE_TEXT_FILL }),
+      content: new Text(strings.clearStringProperty, {
+        font: new PhetFont(ACQUISITION_PANEL_SETTINGS.CLEAR_BUTTON_FONT_SIZE),
+        fill: LIGHT_SURFACE_TEXT_FILL,
+      }),
       listener: () => model.clearRun(),
       accessibleName: a11y.clearButtonStringProperty,
       enabledProperty: hasSamplesProperty,
@@ -139,7 +148,10 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
 
     const exportButton = new RectangularPushButton({
       ...FLAT_PANEL_PUSH_BUTTON_OPTIONS,
-      content: new Text(strings.exportCsvStringProperty, { font: new PhetFont(13), fill: LIGHT_SURFACE_TEXT_FILL }),
+      content: new Text(strings.exportCsvStringProperty, {
+        font: new PhetFont(ACQUISITION_PANEL_SETTINGS.EXPORT_BUTTON_FONT_SIZE),
+        fill: LIGHT_SURFACE_TEXT_FILL,
+      }),
       listener: () => {
         // The binned table goes along only while the histogram is the chart on
         // screen: it is what the student is reading, and its bin width is the
@@ -172,9 +184,9 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
     );
 
     const progressText = new Text(progressProperty, {
-      font: new PhetFont(12),
+      font: new PhetFont(ACQUISITION_PANEL_SETTINGS.PROGRESS_TEXT_FONT_SIZE),
       fill: RadioactivityAndStatisticsColors.secondaryTextColorProperty,
-      maxWidth: CONTROL_PANEL_WIDTH - 30,
+      maxWidth: CONTROL_PANEL_WIDTH - ACQUISITION_PANEL_SETTINGS.PROGRESS_TEXT_MAX_WIDTH_OFFSET,
     });
 
     disposables.push(
@@ -189,7 +201,7 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 8,
+        spacing: ACQUISITION_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
         preferredWidth: CONTROL_PANEL_WIDTH - 24,
         stretch: true,
         children: [
@@ -198,7 +210,7 @@ export class AcquisitionPanel extends RadioactivityAndStatisticsPanel {
           samplesPerRunControl,
           continuousCheckbox,
           new HBox({
-            spacing: 8,
+            spacing: ACQUISITION_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
             children: [new Node({ children: [recordButton, stopButton] }), clearButton, exportButton],
           }),
           progressText,

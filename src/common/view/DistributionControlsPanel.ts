@@ -1,3 +1,4 @@
+import { DISTRIBUTION_CONTROLS_PANEL_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * DistributionControlsPanel.ts
  *
@@ -46,7 +47,7 @@ export class DistributionControlsPanel extends RadioactivityAndStatisticsPanel {
     const strings = StringManager.getInstance().getHistogramStrings();
 
     const title = new Text(strings.titleStringProperty, {
-      font: new PhetFont({ size: 15, weight: "bold" }),
+      font: new PhetFont({ size: DISTRIBUTION_CONTROLS_PANEL_SETTINGS.TITLE_FONT_SIZE, weight: "bold" }),
       fill: RadioactivityAndStatisticsColors.textColorProperty,
     });
 
@@ -59,9 +60,9 @@ export class DistributionControlsPanel extends RadioactivityAndStatisticsPanel {
       new Checkbox(
         property,
         new Text(labelProperty, {
-          font: new PhetFont(12),
+          font: new PhetFont(DISTRIBUTION_CONTROLS_PANEL_SETTINGS.CURVE_CHECKBOX_FONT_SIZE),
           fill: RadioactivityAndStatisticsColors.textColorProperty,
-          maxWidth: CONTROL_PANEL_WIDTH - 55,
+          maxWidth: CONTROL_PANEL_WIDTH - DISTRIBUTION_CONTROLS_PANEL_SETTINGS.CURVE_CHECKBOX_MAX_WIDTH_OFFSET,
         }),
         { ...RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS, accessibleName },
       );
@@ -85,9 +86,9 @@ export class DistributionControlsPanel extends RadioactivityAndStatisticsPanel {
     const autoBinWidthCheckbox = new Checkbox(
       model.isAutoBinWidthProperty,
       new Text(strings.autoBinWidthStringProperty, {
-        font: new PhetFont(12),
+        font: new PhetFont(DISTRIBUTION_CONTROLS_PANEL_SETTINGS.AUTO_BIN_WIDTH_CHECKBOX_FONT_SIZE),
         fill: RadioactivityAndStatisticsColors.textColorProperty,
-        maxWidth: CONTROL_PANEL_WIDTH - 55,
+        maxWidth: CONTROL_PANEL_WIDTH - DISTRIBUTION_CONTROLS_PANEL_SETTINGS.AUTO_BIN_WIDTH_CHECKBOX_MAX_WIDTH_OFFSET,
       }),
       { ...RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS, accessibleName: a11y.autoBinWidthCheckboxStringProperty },
     );
@@ -102,11 +103,13 @@ export class DistributionControlsPanel extends RadioactivityAndStatisticsPanel {
         ...RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS,
         delta: 1,
         titleNodeOptions: {
-          font: new PhetFont(12),
+          font: new PhetFont(DISTRIBUTION_CONTROLS_PANEL_SETTINGS.BIN_WIDTH_CONTROL_FONT_SIZE),
           fill: RadioactivityAndStatisticsColors.textColorProperty,
-          maxWidth: CONTROL_PANEL_WIDTH - 40,
+          maxWidth: CONTROL_PANEL_WIDTH - DISTRIBUTION_CONTROLS_PANEL_SETTINGS.BIN_WIDTH_CONTROL_MAX_WIDTH_OFFSET,
         },
-        numberDisplayOptions: { textOptions: { font: new PhetFont(12) } },
+        numberDisplayOptions: {
+          textOptions: { font: new PhetFont(DISTRIBUTION_CONTROLS_PANEL_SETTINGS.BIN_WIDTH_CONTROL_FONT_SIZE) },
+        },
         accessibleName: a11y.binWidthControlStringProperty,
         enabledProperty: manualBinWidthEnabledProperty,
       },
@@ -115,7 +118,7 @@ export class DistributionControlsPanel extends RadioactivityAndStatisticsPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 6,
+        spacing: DISTRIBUTION_CONTROLS_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
         preferredWidth: CONTROL_PANEL_WIDTH - 24,
         stretch: true,
         children: [
