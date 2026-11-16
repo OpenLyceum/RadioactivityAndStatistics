@@ -71,7 +71,7 @@ export function createSimulationIcon(): ScreenIcon {
         new Line(left, y(meanFraction), right, y(meanFraction), {
           stroke: RadioactivityAndStatisticsColors.chartAxisColorProperty,
           lineWidth: RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.CREATE_SIMULATION_ICON_LINE_WIDTH,
-          lineDash: [RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.CREATE_SIMULATION_ICON_LINE_DASH_DASH, 12],
+          lineDash: [RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS.CREATE_SIMULATION_ICON_LINE_DASH, 12],
         }),
         new Path(traceShape, {
           stroke: RadioactivityAndStatisticsColors.countRateTraceColorProperty,

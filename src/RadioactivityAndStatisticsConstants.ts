@@ -155,16 +155,16 @@ export const RADIOACTIVITY_AND_STATISTICS_CONTROL_OPTIONS_SETTINGS = {
   NUMBER_CONTROL_SLIDER_TRACK_SIZE_HEIGHT: 3,
   /** Checkbox box width (px). */
   CHECKBOX_BOX_WIDTH: 16,
-  /** Radioactivity and statistics number control options scale (dimensionless). */
-  RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS_SCALE: 0.75,
-  /** Radioactivity and statistics number control options slider padding (px). */
-  RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS_SLIDER_PADDING: 4,
-  /** Radioactivity and statistics number control options arrow button spacing (px). */
-  RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS_ARROW_BUTTON_SPACING: 3,
-  /** Radioactivity and statistics number control options vertical spacing (px). */
-  RADIOACTIVITY_AND_STATISTICS_NUMBER_CONTROL_OPTIONS_VERTICAL_SPACING: 4,
-  /** Radioactivity and statistics checkbox options spacing (px). */
-  RADIOACTIVITY_AND_STATISTICS_CHECKBOX_OPTIONS_SPACING: 4,
+  /** NumberControl arrow-button scale (dimensionless). */
+  NUMBER_CONTROL_SCALE: 0.75,
+  /** NumberControl layout: padding beside the slider (px). */
+  NUMBER_CONTROL_SLIDER_PADDING: 4,
+  /** NumberControl layout: gap between arrow buttons (px). */
+  NUMBER_CONTROL_ARROW_BUTTON_SPACING: 3,
+  /** NumberControl layout: vertical gap between rows (px). */
+  NUMBER_CONTROL_VERTICAL_SPACING: 4,
+  /** Checkbox label gap (px). */
+  CHECKBOX_SPACING: 4,
 } as const;
 
 /** Settings for common/RadioactivityAndStatisticsPanel.ts. */
@@ -177,7 +177,7 @@ export const RADIOACTIVITY_AND_STATISTICS_PANEL_SETTINGS = {
 
 /** Settings for common/RadioactivityAndStatisticsScreenIcons.ts. */
 export const RADIOACTIVITY_AND_STATISTICS_SCREEN_ICONS_SETTINGS = {
-  CREATE_SIMULATION_ICON_LINE_DASH_DASH: 16, // px
+  CREATE_SIMULATION_ICON_LINE_DASH: 16, // px
 
   CREATE_SIMULATION_ICON_ITEM_3_LINE_WIDTH: 8, // px
 
@@ -217,7 +217,7 @@ export const GAUSSIAN_FIT_SETTINGS = {
 
 /** Settings for common/model/GeigerCountSource.ts. */
 export const GEIGER_COUNT_SOURCE_SETTINGS = {
-  /** * How often the device is polled, in ms. Fast enough to resolve a one-second counting interval, slow enough to sit well inside a BLE connection interval (the tighter of the two wires). */
+  /** How often the device is polled, in ms. Fast enough to resolve a one-second counting interval, slow enough to sit well inside a BLE connection interval (the tighter of the two wires). */
   DEFAULT_POLL_INTERVAL_MS: 100,
   /** Consecutive failed reads tolerated before the connection is declared bad. */
   MAXIMUM_CONSECUTIVE_FAILURES: 10,
@@ -239,7 +239,7 @@ export const HISTOGRAM_SETTINGS = {
 
 /** Settings for common/model/SimulatedCountSource.ts. */
 export const SIMULATED_COUNT_SOURCE_SETTINGS = {
-  /** * Above this expected number of events per step, Knuth's product algorithm needs too many iterations and a Gaussian approximation is indistinguishable (the relative error of the normal approximation is below a part in a thousand by λ = 30). */
+  /** Above this expected number of events per step, Knuth's product algorithm needs too many iterations and a Gaussian approximation is indistinguishable (the relative error of the normal approximation is below a part in a thousand by λ = 30). */
   KNUTH_ALGORITHM_LIMIT: 30,
 } as const;
 
@@ -263,7 +263,7 @@ export const ACQUISITION_PANEL_SETTINGS = {
   INTERVAL_CONTROL_FONT_SIZE: 13,
   /** Samples per run control delta (control/model units). */
   SAMPLES_PER_RUN_CONTROL_DELTA: 5,
-  /** Samples per run control font size (count). */
+  /** Samples per run control font size (px). */
   SAMPLES_PER_RUN_CONTROL_FONT_SIZE: 13,
   /** Continuous checkbox font size (px). */
   CONTINUOUS_CHECKBOX_FONT_SIZE: 13,
@@ -310,7 +310,7 @@ export const COUNT_RATE_CHART_NODE_SETTINGS = {
   DEFAULT_Y_RANGE_MAX: 30,
   /** Roughly how many ticks to aim for on each axis. */
   TARGET_TICK_COUNT: 6,
-  /** Maximum plotted points (px). */
+  /** Maximum plotted points (count). */
   MAXIMUM_PLOTTED_POINTS: 1000,
   /** Point plot radius (px). */
   POINT_PLOT_RADIUS: 2.5,
@@ -511,9 +511,10 @@ export const RADIOACTIVITY_AND_STATISTICS_PREFERENCES_NODE_SETTINGS = {
   CONSTRUCTOR_SPACING: 12,
 } as const;
 
-/** Component dimensions in px; ratios and control steps are dimensionless; precision counts digits. */
+/** Defaults for developer query parameters. */
 export const RADIOACTIVITY_AND_STATISTICS_QUERY_PARAMETERS_SETTINGS = {
-  RADIOACTIVITY_AND_STATISTICS_QUERY_PARAMETERS_DEFAULT_VALUE: 100, // dimensionless
+  /** Default Geiger poll interval (`?pollIntervalMs`), in milliseconds. */
+  DEFAULT_POLL_INTERVAL_MS: 100,
 } as const;
 
 RadioactivityAndStatisticsNamespace.register("RadioactivityAndStatisticsConstants", {
