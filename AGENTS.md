@@ -60,6 +60,14 @@ A11y strings live under the `a11y` key of each locale JSON, read through `String
 in the `types` array of **both** `tsconfig.json` and `tsconfig.test.json` — the
 tests import `src` modules that reference the Web Bluetooth and WebUSB globals.
 
+- `memory-leak:AcquisitionPanel` — panel chrome retains via sim-lifetime StringManager Properties after dispose.
+- `memory-leak:SourcePanel` — panel chrome retains via sim-lifetime StringManager Properties after dispose.
+- `memory-leak:StatisticsPanel` — panel chrome retains via sim-lifetime StringManager Properties after dispose.
+- `memory-leak:DistributionControlsPanel` — panel chrome retains via sim-lifetime StringManager Properties after dispose.
+- `memory-leak:HistogramNode` — chart Text / Bamboo nodes retain via StringManager Properties after dispose.
+- `memory-leak:CountRateChartNode` — chart Text / Bamboo nodes retain via StringManager Properties after dispose.
+- `memory-leak:DataTableNode` — table Text nodes retain via StringManager Properties after dispose.
+
 ## Testing
 
 ### Hardware testing

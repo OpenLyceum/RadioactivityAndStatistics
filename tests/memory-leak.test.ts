@@ -11,6 +11,12 @@ import { describe, expect, it } from "vitest";
 import { GeigerCountSource } from "../src/common/model/GeigerCountSource.js";
 import { RadioactivityModel } from "../src/common/model/RadioactivityModel.js";
 import { SimulatedCountSource } from "../src/common/model/SimulatedCountSource.js";
+import { CountRateDisplayNode } from "../src/common/view/CountRateDisplayNode.js";
+import { DeviceModel } from "../src/device/model/DeviceModel.js";
+import { DeviceScreenSummaryContent } from "../src/device/view/DeviceScreenSummaryContent.js";
+import { RadioactivityAndStatisticsPreferencesModel } from "../src/preferences/RadioactivityAndStatisticsPreferencesModel.js";
+import { SimulationModel } from "../src/simulation/model/SimulationModel.js";
+import { SimulationScreenSummaryContent } from "../src/simulation/view/SimulationScreenSummaryContent.js";
 import { describeDisposalLeaks, forceGC } from "./helpers/memoryLeak.js";
 
 /**
@@ -43,7 +49,27 @@ describe("Memory leak regression", () => {
   });
 });
 
+const preferences = new RadioactivityAndStatisticsPreferencesModel();
+const simulationModel = new SimulationModel(preferences);
+const deviceModel = new DeviceModel(preferences);
+const acquisition = simulationModel.acquisition;
+
 describeDisposalLeaks([
   { name: "GeigerCountSource", create: () => new GeigerCountSource() },
   { name: "RadioactivityModel", create: () => new RadioactivityModel() },
+  {
+    name: "CountRateDisplayNode",
+    create: () => new CountRateDisplayNode(acquisition),
+    keepAlive: () => [acquisition],
+  },
+  {
+    name: "SimulationScreenSummaryContent",
+    create: () => new SimulationScreenSummaryContent(simulationModel),
+    keepAlive: () => [simulationModel],
+  },
+  {
+    name: "DeviceScreenSummaryContent",
+    create: () => new DeviceScreenSummaryContent(deviceModel),
+    keepAlive: () => [deviceModel],
+  },
 ]);
