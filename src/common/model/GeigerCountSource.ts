@@ -1,3 +1,4 @@
+import { roundSymmetric } from "scenerystack/dot";
 import { GEIGER_COUNT_SOURCE_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * GeigerCountSource.ts
@@ -85,7 +86,7 @@ export class GeigerCountSource implements TCountSource {
   /** True while connected, so acquisition can refuse to start without a device. */
   public readonly isAvailableProperty: BooleanProperty;
 
-  private readonly totalCounts: NumberProperty;
+  private readonly mutableTotalCountsProperty: NumberProperty;
   private readonly device: GeigerCounterDevice;
   private readonly controls: GeigerDeviceControls | null;
 
@@ -112,7 +113,7 @@ export class GeigerCountSource implements TCountSource {
     this.countRegisterProperty = new NumberProperty(0);
     this.tubeVoltageProperty = new NumberProperty(0, { units: "V" });
     this.isAvailableProperty = new BooleanProperty(false);
-    this.totalCounts = new NumberProperty(0);
+    this.mutableTotalCountsProperty = new NumberProperty(0);
 
     this.device = new GeigerCounterDevice(() => this.handleUnexpectedDisconnect());
 
@@ -129,7 +130,7 @@ export class GeigerCountSource implements TCountSource {
   }
 
   public get totalCountsProperty(): TReadOnlyProperty<number> {
-    return this.totalCounts;
+    return this.mutableTotalCountsProperty;
   }
 
   /**
@@ -195,7 +196,7 @@ export class GeigerCountSource implements TCountSource {
   }
 
   public reset(): void {
-    this.totalCounts.value = 0;
+    this.mutableTotalCountsProperty.value = 0;
   }
 
   public dispose(): void {
@@ -211,7 +212,7 @@ export class GeigerCountSource implements TCountSource {
     this.countRegisterProperty.dispose();
     this.tubeVoltageProperty.dispose();
     this.isAvailableProperty.dispose();
-    this.totalCounts.dispose();
+    this.mutableTotalCountsProperty.dispose();
   }
 
   /** Writes the current preference values to a connected counter. */
@@ -231,7 +232,7 @@ export class GeigerCountSource implements TCountSource {
     if (!(this.controls && this.device.isConnected)) {
       return;
     }
-    const volts = Math.round(this.controls.tubeVoltageProperty.value);
+    const volts = roundSymmetric(this.controls.tubeVoltageProperty.value);
     const clamped = Math.min(TUBE_VOLTAGE_CONTROL_RANGE.max, Math.max(TUBE_VOLTAGE_CONTROL_RANGE.min, volts));
     await this.device.setTubeVoltage(clamped);
   }
@@ -241,6 +242,7 @@ export class GeigerCountSource implements TCountSource {
     if (this.pollTimerId !== null) {
       return;
     }
+    // biome-ignore lint/plugin/no-native-timer: async host/hardware delay (not sim step)
     this.pollTimerId = setInterval(() => {
       // poll() reports failures through connectionStateProperty rather than
       // rejecting; this catch only guards against a teardown race becoming an
@@ -299,7 +301,7 @@ export class GeigerCountSource implements TCountSource {
       this.hasFlushedBacklog = true;
       return;
     }
-    this.totalCounts.value += register;
+    this.mutableTotalCountsProperty.value += register;
   }
 
   /** The device dropped the link on its own — flat battery, out of range, unplugged, off. */

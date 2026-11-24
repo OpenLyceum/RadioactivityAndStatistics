@@ -13,7 +13,7 @@ import { COUNT_RATE_DISPLAY_NODE_SETTINGS } from "../../RadioactivityAndStatisti
  */
 
 import { DerivedProperty } from "scenerystack/axon";
-import { toFixed } from "scenerystack/dot";
+import { roundSymmetric, toFixed } from "scenerystack/dot";
 import { Text, VBox } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
 import { StringManager } from "../../i18n/StringManager.js";
@@ -34,7 +34,7 @@ export class CountRateDisplayNode extends VBox {
     );
     const intervalValueProperty = new DerivedProperty(
       [model.intervalCountsProperty, model.intervalElapsedProperty, model.countingIntervalProperty],
-      (counts, elapsed, interval) => `${Math.max(0, Math.round(counts))} (${toFixed(elapsed, 1)}/${interval} s)`,
+      (counts, elapsed, interval) => `${Math.max(0, roundSymmetric(counts))} (${toFixed(elapsed, 1)}/${interval} s)`,
     );
 
     const caption = new Text(readoutStrings.countRateStringProperty, {

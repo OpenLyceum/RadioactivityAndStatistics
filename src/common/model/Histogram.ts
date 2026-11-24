@@ -1,3 +1,4 @@
+import { roundSymmetric } from "scenerystack/dot";
 import { HISTOGRAM_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * Histogram.ts
@@ -88,7 +89,7 @@ export class CountTally {
 
   /** Folds in one measurement. Counts are integers, so the value is rounded. */
   public add(value: number): void {
-    const count = Math.max(0, Math.round(value));
+    const count = Math.max(0, roundSymmetric(value));
     this.frequencies[count] = (this.frequencies[count] ?? 0) + 1;
     this.samples += 1;
     this.smallest = Math.min(this.smallest, count);
@@ -147,7 +148,7 @@ export function chooseBinWidthOf(tally: CountTally): number {
   }
 
   const idealWidth = 2 * interquartileRange * tally.totalSamples ** (-1 / 3);
-  let width = Math.max(1, Math.round(idealWidth));
+  let width = Math.max(1, roundSymmetric(idealWidth));
 
   // Too few bins to show a shape: narrow them until there are enough.
   if (span / width < MINIMUM_TARGET_BINS) {
@@ -208,7 +209,7 @@ export function createHistogramOf(tally: CountTally, binWidth?: number): Histogr
     return EMPTY_HISTOGRAM;
   }
 
-  const width = Math.max(1, Math.round(binWidth ?? chooseBinWidthOf(tally)));
+  const width = Math.max(1, roundSymmetric(binWidth ?? chooseBinWidthOf(tally)));
 
   // Snap the first edge down to a multiple of the bin width so that re-binning
   // the same data with a different width keeps the bars aligned to the axis.

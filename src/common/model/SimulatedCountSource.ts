@@ -14,7 +14,7 @@ import { SIMULATED_COUNT_SOURCE_SETTINGS } from "../../RadioactivityAndStatistic
  */
 
 import { NumberProperty, Property, type TReadOnlyProperty } from "scenerystack/axon";
-import { dotRandom } from "scenerystack/dot";
+import { dotRandom, roundSymmetric } from "scenerystack/dot";
 import { CountSourceType, type CountSourceTypeValue, type TCountSource } from "./CountSource.js";
 
 /**
@@ -48,7 +48,7 @@ function samplePoisson(mean: number): number {
     return count;
   }
 
-  return Math.max(0, Math.round(mean + Math.sqrt(mean) * dotRandom.nextGaussian()));
+  return Math.max(0, roundSymmetric(mean + Math.sqrt(mean) * dotRandom.nextGaussian()));
 }
 
 export class SimulatedCountSource implements TCountSource {
@@ -60,17 +60,17 @@ export class SimulatedCountSource implements TCountSource {
   /** A simulated source is always ready. */
   public readonly isAvailableProperty: TReadOnlyProperty<boolean> = new Property(true);
 
-  private readonly totalCounts: NumberProperty;
+  private readonly mutableTotalCountsProperty: NumberProperty;
 
   public constructor(initialActivity: number) {
     // PhET's units vocabulary has no counts-per-second entry, so this rate
     // carries no unit annotation; the view labels it explicitly.
     this.activityProperty = new NumberProperty(initialActivity);
-    this.totalCounts = new NumberProperty(0);
+    this.mutableTotalCountsProperty = new NumberProperty(0);
   }
 
   public get totalCountsProperty(): TReadOnlyProperty<number> {
-    return this.totalCounts;
+    return this.mutableTotalCountsProperty;
   }
 
   /**
@@ -86,17 +86,17 @@ export class SimulatedCountSource implements TCountSource {
     }
     const events = samplePoisson(this.activityProperty.value * dt);
     if (events > 0) {
-      this.totalCounts.value += events;
+      this.mutableTotalCountsProperty.value += events;
     }
   }
 
   public reset(): void {
-    this.totalCounts.value = 0;
+    this.mutableTotalCountsProperty.value = 0;
     this.activityProperty.reset();
   }
 
   public dispose(): void {
     this.activityProperty.dispose();
-    this.totalCounts.dispose();
+    this.mutableTotalCountsProperty.dispose();
   }
 }
