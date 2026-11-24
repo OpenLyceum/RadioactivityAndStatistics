@@ -28,8 +28,9 @@ const radioactivityAndStatisticsQueryParameters = QueryStringMachine.getAll({
    * GM tube sits near 500 V.
    */
   showDiagnostics: {
-    type: "boolean",
+    type: "custom",
     defaultValue: false,
+    parse: (value: string | null): boolean => value === null || value === "true",
     public: true,
   },
 
@@ -70,6 +71,7 @@ const radioactivityAndStatisticsQueryParameters = QueryStringMachine.getAll({
   tubeVoltage: {
     type: "number",
     defaultValue: TUBE_VOLTAGE_CONTROL_RANGE.default,
+    isValidValue: (value: number) => value >= TUBE_VOLTAGE_CONTROL_RANGE.min && value <= TUBE_VOLTAGE_CONTROL_RANGE.max,
     public: true,
   },
 
