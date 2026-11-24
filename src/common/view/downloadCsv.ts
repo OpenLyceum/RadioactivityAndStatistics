@@ -35,6 +35,7 @@ export function downloadCsv(filename: string, contents: string): boolean {
 
   // Revoking immediately can cancel the download in some browsers; one turn of
   // the event loop is enough for the click to have been consumed.
+  // biome-ignore lint/plugin/no-native-timer: async host/hardware delay (not sim step)
   setTimeout(() => URL.revokeObjectURL(url), 0);
   return true;
 }

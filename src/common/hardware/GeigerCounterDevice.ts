@@ -111,6 +111,7 @@ export class GeigerCounterDevice {
     const transport = this.requireTransport();
 
     const sample = new Promise<GeigerSample>((resolve, reject) => {
+      // biome-ignore lint/plugin/no-native-timer: async host/hardware delay (not sim step)
       const timeoutId = setTimeout(() => {
         this.pendingRead = null;
         reject(new DeviceReadTimeout());

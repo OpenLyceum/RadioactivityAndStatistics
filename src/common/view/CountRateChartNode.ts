@@ -25,7 +25,7 @@ import {
   TickLabelSet,
   TickMarkSet,
 } from "scenerystack/bamboo";
-import { Range, Vector2 } from "scenerystack/dot";
+import { Range, roundSymmetric, Vector2 } from "scenerystack/dot";
 import { Orientation } from "scenerystack/phet-core";
 import { HBox, Line, Node, type ProfileColorProperty, Text, VBox } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
@@ -296,5 +296,5 @@ function legendEntry(
 
 /** Formats a tick value, dropping the decimal point on whole numbers. */
 function formatTick(value: number): string {
-  return Number.isInteger(value) ? String(value) : String(Math.round(value * 10) / 10);
+  return Number.isInteger(value) ? String(value) : String(roundSymmetric(value * 10) / 10);
 }

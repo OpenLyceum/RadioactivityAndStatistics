@@ -14,7 +14,7 @@ import { SIMULATED_COUNT_SOURCE_SETTINGS } from "../../RadioactivityAndStatistic
  */
 
 import { NumberProperty, Property, type TReadOnlyProperty } from "scenerystack/axon";
-import { dotRandom } from "scenerystack/dot";
+import { dotRandom, roundSymmetric } from "scenerystack/dot";
 import { CountSourceType, type CountSourceTypeValue, type TCountSource } from "./CountSource.js";
 
 /**
@@ -48,7 +48,7 @@ function samplePoisson(mean: number): number {
     return count;
   }
 
-  return Math.max(0, Math.round(mean + Math.sqrt(mean) * dotRandom.nextGaussian()));
+  return Math.max(0, roundSymmetric(mean + Math.sqrt(mean) * dotRandom.nextGaussian()));
 }
 
 export class SimulatedCountSource implements TCountSource {

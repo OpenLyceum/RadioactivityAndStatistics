@@ -1,3 +1,4 @@
+import { roundSymmetric } from "scenerystack/dot";
 import { GEIGER_COUNT_SOURCE_SETTINGS } from "../../RadioactivityAndStatisticsConstants.js";
 /**
  * GeigerCountSource.ts
@@ -231,7 +232,7 @@ export class GeigerCountSource implements TCountSource {
     if (!(this.controls && this.device.isConnected)) {
       return;
     }
-    const volts = Math.round(this.controls.tubeVoltageProperty.value);
+    const volts = roundSymmetric(this.controls.tubeVoltageProperty.value);
     const clamped = Math.min(TUBE_VOLTAGE_CONTROL_RANGE.max, Math.max(TUBE_VOLTAGE_CONTROL_RANGE.min, volts));
     await this.device.setTubeVoltage(clamped);
   }
@@ -241,6 +242,7 @@ export class GeigerCountSource implements TCountSource {
     if (this.pollTimerId !== null) {
       return;
     }
+    // biome-ignore lint/plugin/no-native-timer: async host/hardware delay (not sim step)
     this.pollTimerId = setInterval(() => {
       // poll() reports failures through connectionStateProperty rather than
       // rejecting; this catch only guards against a teardown race becoming an

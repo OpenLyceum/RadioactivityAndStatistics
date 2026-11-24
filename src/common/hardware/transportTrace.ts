@@ -8,6 +8,7 @@
  * counter's actual behaviour can be read off the console during bring-up.
  */
 
+import { roundSymmetric } from "scenerystack/dot";
 import radioactivityAndStatisticsQueryParameters from "../../preferences/radioactivityAndStatisticsQueryParameters.js";
 
 /** Whether byte-level tracing is on. Read from the sim query-parameter schema. */
@@ -36,7 +37,7 @@ export function trace(channel: string, label: string, detail: unknown = ""): voi
     return;
   }
   const now = performance.now();
-  const sinceLast = lastTraceTime === 0 ? 0 : Math.round(now - lastTraceTime);
+  const sinceLast = lastTraceTime === 0 ? 0 : roundSymmetric(now - lastTraceTime);
   lastTraceTime = now;
   // biome-ignore lint/suspicious/noConsole: temporary hardware bring-up tracing
   console.log(`[${channel}] +${String(sinceLast).padStart(4)}ms ${label}`, detail);

@@ -20,6 +20,7 @@
 
 import { BooleanProperty, DerivedProperty, NumberProperty, Property, type TReadOnlyProperty } from "scenerystack/axon";
 import type { Range } from "scenerystack/dot";
+import { roundSymmetric } from "scenerystack/dot";
 import type { TModel } from "scenerystack/joist";
 import {
   ACTIVITY_RANGE,
@@ -374,7 +375,7 @@ export class RadioactivityModel implements TModel {
       remainingDt -= stepDt;
 
       if (elapsed >= interval) {
-        const counts = Math.max(0, Math.round(source.totalCountsProperty.value - this.intervalStartTotal));
+        const counts = Math.max(0, roundSymmetric(source.totalCountsProperty.value - this.intervalStartTotal));
         lastCountRate = counts / interval;
 
         if (this.isRecordingProperty.value) {
@@ -473,7 +474,7 @@ export class RadioactivityModel implements TModel {
    */
   private rebuildHistogram(): void {
     if (this.isAutoBinWidthProperty.value) {
-      const chosen = BIN_WIDTH_RANGE.constrainValue(Math.round(chooseBinWidthOf(this.tally)));
+      const chosen = BIN_WIDTH_RANGE.constrainValue(roundSymmetric(chooseBinWidthOf(this.tally)));
       this.isMirroringBinWidth = true;
       this.manualBinWidthProperty.value = chosen;
       this.isMirroringBinWidth = false;
